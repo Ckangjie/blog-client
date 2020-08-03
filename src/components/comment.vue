@@ -32,6 +32,7 @@
               v-model="comment.content"
             ></el-input>
           </el-form-item>
+          <emoji />
           <el-button type="primary" @click="onSubmit('comment')" class="submit">提交</el-button>
         </el-col>
       </el-form>
@@ -195,6 +196,7 @@
                           v-model="vatcomment.content"
                         ></el-input>
                       </el-form-item>
+                      <emoji />
                       <el-button type="primary" @click="onSubmit('vatcomment')" class="submit">提交</el-button>
                     </el-col>
                   </el-form>
@@ -218,6 +220,7 @@
 import { MessageBox, Notification } from "element-ui";
 import { getName, getAvatar } from "../utils/auth";
 import { computedTime, rTime } from "../utils/common";
+import emoji from "../components/Emoji/EmojiPanel";
 export default {
   data() {
     return {
@@ -250,6 +253,9 @@ export default {
       pageSize: 8,
       num_comment: 0,
     };
+  },
+  components: {
+    emoji,
   },
   computed: {
     count: function () {
@@ -297,7 +303,7 @@ export default {
     },
     onSubmit(formName) {
       var _this = this;
-      if (getName()) {
+      if (!getName()) {
         let data = formName === "comment" ? this.comment : this.vatcomment,
           router_path = this.$route.path;
         if (router_path.includes("details")) {
@@ -306,7 +312,7 @@ export default {
         if (!data.name) {
           let name = getName()
             ? getName()
-            : "游客" + (Math.floor(Math.random() * 8999) + 1000);
+            : "网友" + (Math.floor(Math.random() * 8999) + 1000);
           data.name = name;
         }
         if (!data.content) {
@@ -376,6 +382,7 @@ export default {
 };
 </script>
 <style scoped lang='less'>
+@import url("../style/emoji.css");
 .comment {
   padding: 20px 0;
   /deep/ .el-input__inner {

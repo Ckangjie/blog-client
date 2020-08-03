@@ -44,8 +44,8 @@ export default {
   data() {
     return {
       articleList: [],
-      currentPage: Number(sessionStorage.getItem("currentPage"))
-        ? Number(sessionStorage.getItem("currentPage"))
+      currentPage: Number(sessionStorage.getItem("currentPageA"))
+        ? Number(sessionStorage.getItem("currentPageA"))
         : 1,
       pageSize: 5,
       loading: false,
@@ -71,7 +71,7 @@ export default {
     // 第val页
     handleCurrentChange(val) {
       this.currentPage = val;
-      sessionStorage.setItem("currentPage", val);
+      sessionStorage.setItem("currentPageA", val);
       this.getList();
     },
     // 跳转详情

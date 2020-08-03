@@ -21,7 +21,7 @@ const computedTime = function (old) {
     } else if (times > 0) {
         returnText = Math.floor(times / 1) + "秒前";
     } else {
-        returnText = "系统错误,必须传入当前时间之前的数值";
+        returnText = "刚刚";
     }
     return returnText;
 }

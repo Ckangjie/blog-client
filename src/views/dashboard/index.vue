@@ -4,39 +4,41 @@
       <el-col :span="24" :xs="20" :md="20" :sm="20" :lg="20">
         <el-row type="flex" class="row-bg" justify="space-around">
           <el-col :span="16" :xs="16" :md="16" :sm="16" v-loading="loading">
-            <el-card class="box-card article-item" v-for="item in showData" :key="item.id">
-              <el-image
-                src="http://127.0.0.1:3001/top.png"
-                class="hotArticle"
-                v-if="item.readCount>500"
-              ></el-image>
-              <div slot="header" class="clearfix">
-                <span class="title" v-if="item.title" @click="details(item)">{{item.title}}</span>
-                <span class="title" v-else>暂无标题</span>
-                <div class="tiem-skill">
-                  <span class="iconfont icon-icon-test">:{{item.time}}</span>
-                  <span class="iconfont icon-jinengbiaoqian" v-if="item.skill">:{{item.skill}}</span>
-                  <span class="iconfont icon-jinengbiaoqian" v-else>javascript</span>
+            <div v-for="item in showData" :key="item.id">
+              <el-card class="box-card article-item">
+                <el-image
+                  src="http://127.0.0.1:3001/top.png"
+                  class="hotArticle"
+                  v-if="item.readCount>500"
+                ></el-image>
+                <div slot="header" class="clearfix">
+                  <span class="title" v-if="item.title" @click="details(item)">{{item.title}}</span>
+                  <span class="title" v-else>暂无标题</span>
+                  <div class="tiem-skill">
+                    <span class="iconfont icon-icon-test">:{{item.time}}</span>
+                    <span class="iconfont icon-jinengbiaoqian" v-if="item.skill">:{{item.skill}}</span>
+                    <span class="iconfont icon-jinengbiaoqian" v-else>javascript</span>
+                  </div>
                 </div>
-              </div>
-              <div v-for="o in 1" :key="o" class="text item">
-                <el-row>
-                  <el-col :span="8" style="display:none">
-                    <el-image :src="item.images" class="iamges"></el-image>
-                  </el-col>
-                  <el-col :span="16" class="a">
-                    <div class="article-conf hide">
-                      <p v-if="item.content">{{item.content}}</p>
-                      <p v-else>暂无数据</p>
-                    </div>
-                    <div class="conf-btm">
-                      <span class="read" @click="details(item)">阅读文章</span>
-                      <span class="iconfont icon-yanjing">{{item.readCount}}</span>
-                    </div>
-                  </el-col>
-                </el-row>
-              </div>
-            </el-card>
+                <div v-for="o in 1" :key="o" class="text item">
+                  <el-row>
+                    <el-col :span="8" style="display:none">
+                      <el-image :src="item.images" class="iamges"></el-image>
+                    </el-col>
+                    <el-col :span="16" class="a">
+                      <div class="article-conf hide">
+                        <p v-if="item.content">{{item.content}}</p>
+                        <p v-else>暂无数据</p>
+                      </div>
+                      <div class="conf-btm">
+                        <span class="read" @click="details(item)">阅读文章</span>
+                        <span class="iconfont icon-yanjing">{{item.readCount}}</span>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </el-card>
+            </div>
           </el-col>
           <el-col :span="6" :xs="6" :md="6" :lg="6" class="hidden-sm-and-down hidden-md-only">
             <el-card class="box-card">
