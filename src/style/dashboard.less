@@ -1,0 +1,148 @@
+.article .article-item{
+	position: relative;
+}
+.article .article-item:hover{
+	box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.3);
+}
+
+.article .text {
+	font-size: 14px;
+}
+
+.article .item {
+	margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	content: "";
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.article .box-card {
+	width: auto;
+}
+.article>.el-row {
+	z-index: 0;
+}
+
+.article .tiem-skill {
+	// margin-top: 8px;
+	color: #aaa;
+	span {
+		margin: 0 10px 0 0;
+	}
+}
+.article .article-conf {
+	// height: 100px;
+	color: #aaa;
+	line-height: 24px;
+	text-indent: 30px;
+	font-size: 16px;
+	text-align: left;
+	padding: 5px;
+}
+
+.article .conf-btm {
+	color: #aaa;
+	padding: 0 8px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.article .read {
+	display: inline-block;
+	position: relative;
+	width: 114px;
+	top: 10px;
+	text-align: center;
+	color: #606266;
+	border: 1px solid #ccc;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 4px;
+}
+.article .read:hover{
+	cursor: pointer;
+	border: 1px solid #3a8ee6;
+	color: #3a8ee6;
+}
+// .article .read:hover:before,.article .read:hover:after{
+// 	width: 100%;
+// 	-webkit-transition: 600ms ease all;
+// 	transition: 600ms ease all;
+// 	background-color: #3a8ee6;
+// }
+// .article .read::before,.article .read::after{
+// 	content: '';
+// 	position: absolute;
+// 	height: 1px;
+// 	width: 0;
+// 	-webkit-transition: 400ms ease all;
+// 	transition: 400ms ease all;
+// }
+.article .read::after{
+	right: 0;
+	bottom: 0;
+}
+.article .read::before{
+	left: 0;
+	top: 0;
+}
+.article .iconfont.icon-yanjing{
+	line-height: 50px;
+}
+.article .hotArticle{
+	width: 60px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.article .skill-item span{
+	padding: 0 5px;
+	margin: 0 3px 5px 3px;
+	&.null{
+		color: #aaa;
+		text-align: center;
+	}
+}
+.article .hot-item .hot{
+	// display: inline-block;
+	height: 30px;
+	max-width: 80%;
+	line-height: 30px;
+}
+.article .hot-item .hot:hover{
+	color: #3a8ee6;
+	cursor: pointer;
+}
+.article i.iconfont.icon-yanjing{
+	position: relative;
+	top: -10px;
+	left: 18px;
+}
+.article .iconfont.icon-yanjing::before{
+	margin-right: 5px;
+}
+
+// .box-card.hot /deep/ .el-card__body .more{
+// 	position: absolute;
+// 	bottom: -8px;
+// 	font-size: 38px;
+// 	color: #ccc;
+// 	left: 50%;
+// 	transform: translateX(-50%)
+// }
+.article .hot-item{
+	height: 35px ;
+}
+.hidden-sm-and-down{
+	display: block;
+}
+.article .a.el-col-16{
+	width: 100%;
+}

@@ -1,0 +1,78 @@
+.nav {
+    height: 60px;
+    background-color: @background;
+    line-height: 60px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .nav .nav-item,
+  .nav-item a {
+    display: inline-block;
+    height: inherit;
+    padding: 0 15px;
+
+    a {
+      text-decoration: none;
+      color: #909399;
+    }
+  }
+
+  .nav .nav-item.active {
+    border-bottom: 2px solid #3a8ee6;
+
+    a {
+      color: black;
+    }
+  }
+  .search {
+    position: relative;
+    right: 30px;
+    top: 8px;
+  }
+  .avatar {
+    padding-top: 6px;
+    cursor: pointer;
+  }
+  .avatar /deep/ .el-avatar {
+    position: relative;
+    top: 12%;
+  }
+  .goLogin{
+    width: 88px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 14px;
+    color: #909399;
+  }
+  .goLogin:hover{
+    color: black;
+    cursor: pointer;
+  }
+  .goLogin.active{
+    border-bottom: 2px solid #3a8ee6;
+    color: black;
+  }
+  // 搜索列表
+  .result{
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
+    position: relative;
+    top: -7px;
+    width: 200px;
+    background-color: white;
+  }
+  .result-item{
+    // height: 30px;
+    line-height: 40px;
+    -webkit-line-clamp:1;
+    padding: 0 5px;
+    cursor: pointer;
+  }
+  .result-item:hover{
+    background-color: #cccccc;
+  }
+  .result-item.active{
+    background-color: #cccccc;
+  }
