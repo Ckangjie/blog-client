@@ -65,4 +65,7 @@ export default {
 .details /deep/ .name-time {
   margin-bottom: 10px;
 }
+.details /deep/ .emoji-panel-wrap.one {
+  top: 208px;
+}
 </style>

@@ -1,18 +1,18 @@
 <template>
-  <div class="content">
-    <div class="nav-box">
+  <el-row class="content">
+    <el-col class="nav-box">
       <navBar />
-    </div>
-    <div class="main">
+    </el-col>
+    <el-col class="main" :xs="24" :md="24" :xl="24" :sm="24" :span="24">
       <router-view />
-    </div>
-    <div class="footer-box">
+    </el-col>
+    <el-col class="footer-box">
       <!-- <btm></btm> -->
-    </div>
+    </el-col>
     <template>
       <el-backtop></el-backtop>
     </template>
-  </div>
+  </el-row>
 </template>
 
 <script>
@@ -21,21 +21,21 @@ import btm from "./footer.vue";
 export default {
   data() {
     return {
-      menuList: []
+      menuList: [],
     };
   },
   methods: {
     getMenu() {
       this.menuList = this.$router.options.routes;
-    }
+    },
   },
   components: {
     navBar,
-    btm
+    btm,
   },
   mounted() {
     this.getMenu();
-  }
+  },
 };
 </script>
 

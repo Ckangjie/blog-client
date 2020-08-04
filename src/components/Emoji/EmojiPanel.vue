@@ -65,18 +65,18 @@ export default {
         "yum",
         "tired_face",
         "triumph",
-        "stuck_out_tongue_winking_eye"
-      ]
+        "stuck_out_tongue_winking_eye",
+      ],
     };
   },
   components: {
-    Emoji
+    Emoji,
   },
   methods: {
     handleEmojiClick(a) {
       this.$emit("emojiClick", a);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -89,6 +89,5 @@ export default {
   height: 164px;
   position: absolute;
   left: 0px;
-  top: 32px;
 }
 </style>

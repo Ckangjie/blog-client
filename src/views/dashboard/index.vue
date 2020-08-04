@@ -86,15 +86,17 @@
             </el-card>
           </el-col>
         </el-row>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[3,5,10,15,20]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        ></el-pagination>
+        <el-col :span="16" :xs="16" :md="16" :xl="16" :sm="16">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[3,5,10,15,20]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+          ></el-pagination>
+        </el-col>
       </el-col>
     </el-row>
   </div>

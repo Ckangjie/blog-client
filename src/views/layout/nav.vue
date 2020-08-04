@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">
+  <el-row class="nav">
     <div class="search" v-if="showSearch">
       <el-input
         v-model="searchKey"
@@ -49,7 +49,7 @@
     </el-dropdown>
     <!-- 未登录 -->
     <div class="goLogin" @click="goLogin()" v-if="showLogin">登录</div>
-  </div>
+  </el-row>
 </template>
 
 <script>

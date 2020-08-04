@@ -25,14 +25,18 @@
         <el-col class="comment-content">
           <el-form-item prop="content" ref="d">
             <el-input
-              class="textarea"
+              id="textpanel"
+              class="textarea textpanel"
               type="textarea"
               :rows="2"
               placeholder="请输入内容"
               v-model="comment.content"
             ></el-input>
           </el-form-item>
-          <emoji />
+          <div class="emoji-panel-btn" @click="showEmojiPanel">
+            <img src="../assets/emoji/face_logo.png" />
+          </div>
+          <emoji @emojiClick="appendEmoji" v-if="isShowEmojiPanel" class="one" />
           <el-button type="primary" @click="onSubmit('comment')" class="submit">提交</el-button>
         </el-col>
       </el-form>
@@ -48,7 +52,7 @@
                 <span class="name">{{item.name}}</span>
                 <span class="time">{{item.time}}</span>
               </el-col>
-              <el-col :span="22">{{item.content}}</el-col>
+              <el-col :span="22" v-html="item.content" class="content"></el-col>
               <el-col :span="2">
                 <el-tooltip
                   class="item"
@@ -107,13 +111,18 @@
                   <span class="close" @click="close(item,index)">+</span>
                   <el-form-item prop="content">
                     <el-input
-                      class="textarea"
+                      id="textpanel2"
+                      class="textarea textpanel2"
                       type="textarea"
                       :rows="2"
                       :placeholder="vatplaceholder"
                       v-model="vatcomment.content"
                     ></el-input>
                   </el-form-item>
+                  <div class="emoji-panel-btn" @click="showEmojiPanel">
+                    <img src="../assets/emoji/face_logo.png" />
+                  </div>
+                  <emoji @emojiClick="appendEmoji" v-if="isShowEmojiPanel" class="two" />
                   <el-button type="primary" @click="onSubmit('vatcomment')" class="submit">提交</el-button>
                 </el-col>
               </el-form>
@@ -127,8 +136,8 @@
                     <span class="time">{{subItem.time}}</span>
                   </el-col>
                   <el-col :span="22">
-                    <span class>@{{subItem.reply_name}}</span>
-                    {{subItem.content}}
+                    <span class="span">@{{subItem.reply_name}}</span>
+                    <div v-html="subItem.content" class="subItem-span"></div>
                   </el-col>
                   <el-col :span="2">
                     <el-tooltip
@@ -189,14 +198,23 @@
                       <span class="close" @click="close(item,index)">+</span>
                       <el-form-item prop="content">
                         <el-input
-                          class="textarea"
+                          id="textpanel3"
+                          class="textarea textpanel3"
                           type="textarea"
                           :rows="2"
                           :placeholder="vatplaceholder"
                           v-model="vatcomment.content"
                         ></el-input>
                       </el-form-item>
-                      <emoji />
+                      <div class="emoji-panel-btn" @click="showEmojiPanel">
+                        <img src="../assets/emoji/face_logo.png" />
+                      </div>
+                      <emoji
+                        @emojiClick="appendEmoji"
+                        data-id="3"
+                        v-if="isShowEmojiPanel"
+                        class="three"
+                      />
                       <el-button type="primary" @click="onSubmit('vatcomment')" class="submit">提交</el-button>
                     </el-col>
                   </el-form>
@@ -224,6 +242,7 @@ import emoji from "../components/Emoji/EmojiPanel";
 export default {
   data() {
     return {
+      isShowEmojiPanel: false,
       name: getName(),
       subId: null,
       showForm: true,
@@ -245,7 +264,7 @@ export default {
         website: "",
         name: "",
         email: "",
-        content: "",
+        content: "5",
         reply_name: "",
         pid: 0,
       },
@@ -275,6 +294,22 @@ export default {
     },
   },
   methods: {
+    showEmojiPanel() {
+      this.isShowEmojiPanel = !this.isShowEmojiPanel;
+    },
+    appendEmoji(text) {
+      var html = `<span class="emoji-item-common emoji-${text}"></span>`;
+      if (this.showForm) {
+        const el = document.getElementById("textpanel");
+        this.comment.content += html;
+        console.log(4);
+      } else {
+        const el = document.getElementById("textpanel2");
+        console.log(this.vatcomment);
+        console.log(5);
+        this.vatcomment.content += html;
+      }
+    },
     getMore() {
       let data = this.$store.state.article.commentList.length;
       this.pageSize += 5;
@@ -324,6 +359,7 @@ export default {
         } else {
           this.$store.dispatch("article/addComment", data).then((res) => {
             this.close();
+            this.isShowEmojiPanel = false;
             this.showForm = true;
             this.getComment();
             if (formName === "comment") {
@@ -356,7 +392,7 @@ export default {
     },
     vat(e) {
       setTimeout(() => {
-        console.log(this.$refs.vatcomment);
+        // console.log(this.$refs.vatcomment[0]);
       }, 200);
       this.showForm = false;
       this.vatcomment = {};
@@ -375,106 +411,50 @@ export default {
       this.id = null;
       this.subId = null;
     },
+    emoji(word) {
+      // 生成html
+      // const type = word.substring(1, word.length - 1);
+      // return `<span class="emoji-item-common emoji-${type} emoji-size-small" ></span>`;
+    },
   },
   mounted() {
     this.getComment();
+    this.emoji();
   },
 };
 </script>
 <style scoped lang='less'>
+@import url("../style/comment.less");
 @import url("../style/emoji.css");
-.comment {
-  padding: 20px 0;
-  /deep/ .el-input__inner {
-    border: 1px dashed transparent;
-    border-bottom: 1px dashed #ccc;
-    border-radius: 0;
-  }
-  /deep/ .el-input__inner:focus {
-    border-bottom-color: #ef2f11;
-  }
-  /deep/ .submit {
-    margin-top: 10px;
-    padding: 5px 10px;
-    float: right;
-    color: #555;
-    background-color: white;
-    border: 1px solid #ededed;
-  }
-  /deep/ .submit:hover {
-    color: #409eff;
-    border: 1px solid #409eff;
-  }
-  .comment-content {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  /deep/ .el-textarea__inner {
-    border: none;
-    padding: 0;
-  }
-  /deep/ .el-avatar.el-avatar--circle {
+span.emoji-item-common.emoji-angry {
+  width: 50px;
+  background: red;
+}
+.content {
+  /deep/ .emoji-item-common {
+    background: url("~@/assets/img/emoji_sprite.png") no-repeat;
+    transform: scale(0.5, 0.5);
+    display: inline-block;
+    margin: -18px -14px;
     vertical-align: middle;
-  }
-  .vcard.el-col.el-col-24 {
-    padding: 5px 0;
-  }
-  .vcard.subItem {
-    border: none;
-  }
-  .el-col.el-col-2 {
-    text-align: center;
-  }
-  .time {
-    margin-left: 15px;
-    color: #b3b3b3;
-    font-size: 0.75em;
-  }
-  .vat {
-    font-size: 0.8125em;
-    cursor: pointer;
-    color: #b3b3b3;
-    outline: none;
-  }
-  .vat-comment {
-    position: relative;
-    .close {
-      position: absolute;
-      top: 5px;
-      right: 10px;
-      z-index: 5;
+    &:hover {
       cursor: pointer;
-      color: #b3b3b3;
-      font-size: 30px;
-      transform: rotate(45deg);
-    }
-    .close:hover {
-      transform: rotate(315deg);
-      transition: all 0.2s;
     }
   }
-  /deep/ .el-col.el-col-22 > span {
-    color: #1abc9c;
-    cursor: pointer;
+  .vatcomment-content {
+    /deep/ .emoji-panel-wrap {
+      top: 100px !important;
+    }
   }
-  /deep/ .el-col.el-col-22 > span:hover,
-  .vat:hover {
-    color: #ff2d52;
-  }
-  .more {
-    text-align: center;
-    color: #ccc;
-    padding-top: 10px;
-    cursor: pointer;
-  }
-  /deep/ .el-button.btn {
-    background-color: transparent;
-    border: none;
-    color: #ccc;
-  }
-  .comment-list.el-col.el-col-24 {
-    transition: height 0.5s;
+  .subItem-span {
+    display: inline-block;
+    /deep/ .emoji-item-common {
+      background: url("~@/assets/img/emoji_sprite.png") no-repeat;
+      transform: scale(0.5, 0.5);
+      display: inline-block;
+      margin: -18px -14px;
+      vertical-align: middle;
+    }
   }
 }
 </style>

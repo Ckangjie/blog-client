@@ -1,0 +1,116 @@
+.comment {
+    .emoji-panel-wrap.one {
+      top: 238px;
+    }
+    .emoji-panel-wrap.two {
+      top: 157px;
+    }
+    .emoji-panel-wrap.three {
+      top: 157px;
+    }
+    .emoji-panel-btn {
+      position: relative;
+      width: 50%;
+      top: 50px;
+      &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+      }
+      img {
+        height: 24px;
+        width: 24px;
+      }
+    }
+    padding: 20px 0;
+    /deep/ .el-input__inner {
+      border: 1px dashed transparent;
+      border-bottom: 1px dashed #ccc;
+      border-radius: 0;
+    }
+    /deep/ .el-input__inner:focus {
+      border-bottom-color: #ef2f11;
+    }
+    /deep/ .submit {
+      margin-top: 10px;
+      padding: 5px 10px;
+      float: right;
+      color: #555;
+      background-color: white;
+      border: 1px solid #ededed;
+    }
+    /deep/ .submit:hover {
+      color: #409eff;
+      border: 1px solid #409eff;
+    }
+    .comment-content {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    /deep/ .el-textarea__inner {
+      border: none;
+      padding: 0;
+    }
+    /deep/ .el-avatar.el-avatar--circle {
+      vertical-align: middle;
+    }
+    .vcard.el-col.el-col-24 {
+      padding: 5px 0;
+    }
+    .vcard.subItem {
+      border: none;
+    }
+    .el-col.el-col-2 {
+      text-align: center;
+    }
+    .time {
+      margin-left: 15px;
+      color: #b3b3b3;
+      font-size: 0.75em;
+    }
+    .vat {
+      font-size: 0.8125em;
+      cursor: pointer;
+      color: #b3b3b3;
+      outline: none;
+    }
+    .vat-comment {
+      position: relative;
+      .close {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        z-index: 5;
+        cursor: pointer;
+        color: #b3b3b3;
+        font-size: 30px;
+        transform: rotate(45deg);
+      }
+      .close:hover {
+        transform: rotate(315deg);
+        transition: all 0.2s;
+      }
+    }
+    /deep/ .el-col.el-col-22 > .span {
+      color: #1abc9c;
+      cursor: pointer;
+    }
+    /deep/ .el-col.el-col-22
+    .vat:hover {
+      color: #ff2d52;
+    }
+    .more {
+      text-align: center;
+      color: #ccc;
+      padding-top: 10px;
+      cursor: pointer;
+    }
+    /deep/ .el-button.btn {
+      background-color: transparent;
+      border: none;
+      color: #ccc;
+    }
+    .comment-list.el-col.el-col-24 {
+      transition: height 0.5s;
+    }
+  }
