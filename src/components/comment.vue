@@ -1,45 +1,14 @@
 <template>
   <el-row class="comment">
     <div class="comment-form">
-      <el-form ref="comment" :model="comment" v-if="showForm">
-        <el-col :span="8">
-          <el-form-item prop="name">
-            <el-input type="text" v-model="comment.name" autocomplete="off" placeholder="请输入用户名"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item prop="email">
-            <el-input type="text" autocomplete="off" v-model="comment.email" placeholder="请输入邮箱"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item prop="website">
-            <el-input
-              type="text"
-              autocomplete="off"
-              v-model="comment.website"
-              placeholder="https://"
-            ></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col class="comment-content">
-          <el-form-item prop="content" ref="d">
-            <el-input
-              id="textpanel"
-              class="textarea textpanel"
-              type="textarea"
-              :rows="2"
-              placeholder="请输入内容"
-              v-model="comment.content"
-            ></el-input>
-          </el-form-item>
-          <div class="emoji-panel-btn" @click="showEmojiPanel">
-            <img src="../assets/emoji/face_logo.png" />
-          </div>
-          <emoji @emojiClick="appendEmoji" v-if="isShowEmojiPanel" class="one" />
-          <el-button type="primary" @click="onSubmit('comment')" class="submit">提交</el-button>
-        </el-col>
-      </el-form>
+      <!-- 表单1 -->
+      <commentForm
+        v-if="showForm"
+        :reply_name="reply_name"
+        :pid="pid"
+        :subid="subid"
+        @getComment="getComment"
+      />
       <el-col class="comment-list">
         <el-col class="vcount">{{count>0?count+'条评论':'请发表你的神评……'}}</el-col>
         <el-col class="vcards">
@@ -71,61 +40,15 @@
                 </el-tooltip>
               </el-col>
               <!-- 一级回复内容 -->
-              <el-form
-                ref="vatcomment"
-                :model="vatcomment"
-                class="vatcomment"
+              <!-- 表单二 -->
+              <commentForm
+                @getComment="getComment"
+                @close="close"
                 v-if="id===item.id?true:false"
-              >
-                <el-col :span="8" ref="f">
-                  <el-form-item prop="name">
-                    <el-input
-                      type="text"
-                      v-model="vatcomment.name"
-                      autocomplete="off"
-                      placeholder="请输入用户名"
-                    ></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                  <el-form-item prop="email">
-                    <el-input
-                      type="text"
-                      autocomplete="off"
-                      v-model="vatcomment.email"
-                      placeholder="请输入邮箱"
-                    ></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                  <el-form-item prop="website">
-                    <el-input
-                      type="text"
-                      autocomplete="off"
-                      v-model="vatcomment.website"
-                      placeholder="https://"
-                    ></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col class="comment-content vat-comment">
-                  <span class="close" @click="close(item,index)">+</span>
-                  <el-form-item prop="content">
-                    <el-input
-                      id="textpanel2"
-                      class="textarea textpanel2"
-                      type="textarea"
-                      :rows="2"
-                      :placeholder="vatplaceholder"
-                      v-model="vatcomment.content"
-                    ></el-input>
-                  </el-form-item>
-                  <div class="emoji-panel-btn" @click="showEmojiPanel">
-                    <img src="../assets/emoji/face_logo.png" />
-                  </div>
-                  <emoji @emojiClick="appendEmoji" v-if="isShowEmojiPanel" class="two" />
-                  <el-button type="primary" @click="onSubmit('vatcomment')" class="submit">提交</el-button>
-                </el-col>
-              </el-form>
+                :reply_name="reply_name"
+                :pid="pid"
+                :subid="subid"
+              />
               <el-col class="vcard subItem" v-for="(subItem,sindex) in item.children" :key="sindex">
                 <el-col :span="2">
                   <el-avatar :size="30" :src="subItem.avatar?subItem.avatar:circleUrl"></el-avatar>
@@ -151,73 +74,21 @@
                         class="fr vat"
                         :data-index="sindex"
                         :data-name="subItem.name"
-                        :data-subId="subItem.id"
+                        :data-subid="subItem.id"
                         :data-pid="item.id"
                         v-if="name===subItem.name?false:true"
                       >回复</span>
                     </el-tooltip>
                   </el-col>
-                  <!-- 二级回复 -->
-                  <el-form
-                    ref="vatcomment"
-                    :model="vatcomment"
-                    class="vatcomment"
-                    v-if="subId===subItem.id?true:false"
-                  >
-                    <el-col :span="8" ref="f">
-                      <el-form-item prop="name">
-                        <el-input
-                          type="text"
-                          v-model="vatcomment.name"
-                          autocomplete="off"
-                          placeholder="请输入用户名"
-                        ></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                      <el-form-item prop="email">
-                        <el-input
-                          type="text"
-                          autocomplete="off"
-                          v-model="vatcomment.email"
-                          placeholder="请输入邮箱"
-                        ></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                      <el-form-item prop="website">
-                        <el-input
-                          type="text"
-                          autocomplete="off"
-                          v-model="vatcomment.website"
-                          placeholder="https://"
-                        ></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col class="comment-content vat-comment">
-                      <span class="close" @click="close(item,index)">+</span>
-                      <el-form-item prop="content">
-                        <el-input
-                          id="textpanel3"
-                          class="textarea textpanel3"
-                          type="textarea"
-                          :rows="2"
-                          :placeholder="vatplaceholder"
-                          v-model="vatcomment.content"
-                        ></el-input>
-                      </el-form-item>
-                      <div class="emoji-panel-btn" @click="showEmojiPanel">
-                        <img src="../assets/emoji/face_logo.png" />
-                      </div>
-                      <emoji
-                        @emojiClick="appendEmoji"
-                        data-id="3"
-                        v-if="isShowEmojiPanel"
-                        class="three"
-                      />
-                      <el-button type="primary" @click="onSubmit('vatcomment')" class="submit">提交</el-button>
-                    </el-col>
-                  </el-form>
+                  <!-- 表单三 -->
+                  <commentForm
+                    @getComment="getComment"
+                    @close="close"
+                    :reply_name="reply_name"
+                    :pid="pid"
+                    :subid="subid"
+                    v-if="subid===subItem.id?true:false"
+                  />
                 </el-col>
               </el-col>
             </el-col>
@@ -235,17 +106,20 @@
   </el-row>
 </template>
 <script>
+import commentForm from "./comment/commentSon";
 import { MessageBox, Notification } from "element-ui";
 import { getName, getAvatar } from "../utils/auth";
 import { computedTime, rTime } from "../utils/common";
-import emoji from "../components/Emoji/EmojiPanel";
 export default {
   data() {
     return {
+      reply_name: "",
+      params: "",
       isShowEmojiPanel: false,
       name: getName(),
-      subId: null,
+      subid: null,
       showForm: true,
+      pid: null,
       id: null,
       vatShow: false,
       circleUrl:
@@ -274,7 +148,7 @@ export default {
     };
   },
   components: {
-    emoji,
+    commentForm,
   },
   computed: {
     count: function () {
@@ -380,9 +254,6 @@ export default {
         }
       }
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
     getComment() {
       this.$store.dispatch("article/commentList", {
         client: "client",
@@ -391,35 +262,28 @@ export default {
       });
     },
     vat(e) {
-      setTimeout(() => {
-        // console.log(this.$refs.vatcomment[0]);
-      }, 200);
       this.showForm = false;
       this.vatcomment = {};
       let params = e.target.dataset;
+      this.params = JSON.stringify(params);
       if (params.subid) {
         this.id = null;
       } else {
         this.id = Number(params.pid);
       }
-      this.vatcomment.pid = Number(params.pid);
-      this.subId = Number(params.subid);
-      this.vatcomment.reply_name = params.name;
-      this.vatplaceholder = "@" + params.name;
+      this.pid = Number(params.pid);
+      this.subid = Number(params.subid);
+      this.reply_name = params.name;
+      this.placeholder = "@" + params.name;
     },
     close() {
+      this.showForm = true;
       this.id = null;
-      this.subId = null;
-    },
-    emoji(word) {
-      // 生成html
-      // const type = word.substring(1, word.length - 1);
-      // return `<span class="emoji-item-common emoji-${type} emoji-size-small" ></span>`;
+      this.subid = null;
     },
   },
   mounted() {
     this.getComment();
-    this.emoji();
   },
 };
 </script>
@@ -428,7 +292,16 @@ export default {
 @import url("../style/emoji.css");
 span.emoji-item-common.emoji-angry {
   width: 50px;
-  background: red;
+}
+.subItem-span {
+  display: inline-block;
+  /deep/ .emoji-item-common {
+    background: url("~@/assets/img/emoji_sprite.png") no-repeat;
+    transform: scale(0.5, 0.5);
+    display: inline-block;
+    margin: -18px -14px;
+    vertical-align: middle;
+  }
 }
 .content {
   /deep/ .emoji-item-common {
@@ -437,24 +310,6 @@ span.emoji-item-common.emoji-angry {
     display: inline-block;
     margin: -18px -14px;
     vertical-align: middle;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  .vatcomment-content {
-    /deep/ .emoji-panel-wrap {
-      top: 100px !important;
-    }
-  }
-  .subItem-span {
-    display: inline-block;
-    /deep/ .emoji-item-common {
-      background: url("~@/assets/img/emoji_sprite.png") no-repeat;
-      transform: scale(0.5, 0.5);
-      display: inline-block;
-      margin: -18px -14px;
-      vertical-align: middle;
-    }
   }
 }
 </style>
