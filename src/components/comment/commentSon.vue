@@ -23,7 +23,7 @@
           </el-form-item>
         </el-col>
         <el-col class="comment-content">
-          <span class="close" @click="close(item,index)" v-if=" this.reply_name != ''?true:false">+</span>
+          <span class="close" @click="close" v-if=" this.reply_name != ''?true:false">+</span>
           <el-form-item prop="content" ref="d">
             <el-input
               id="textpanel"
@@ -72,7 +72,7 @@ export default {
       textarea: "",
       placeholder: this.reply_name != "" ? "@" + this.reply_name : "",
       comment: {
-        website: "66",
+        website: "",
         name: "",
         email: "",
         content: "",
@@ -133,25 +133,18 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    close() {
+      this.$emit("close");
+    },
   },
 };
 </script>
-<style scoped lang=less>
+<style scoped lang='less'>
 @import url("../../style/emoji.css");
 span.emoji-item-common.emoji-angry {
   width: 50px;
 }
 .content {
-  /deep/ .emoji-item-common {
-    background: url("~@/assets/img/emoji_sprite.png") no-repeat;
-    transform: scale(0.5, 0.5);
-    display: inline-block;
-    margin: -18px -14px;
-    vertical-align: middle;
-    &:hover {
-      cursor: pointer;
-    }
-  }
   .emoji-panel-btn {
     position: relative;
     width: 50%;
@@ -190,15 +183,19 @@ span.emoji-item-common.emoji-angry {
 }
 .subItem-span {
   display: inline-block;
-  /deep/ .emoji-item-common {
-    background: url("~@/assets/img/emoji_sprite.png") no-repeat;
-    transform: scale(0.5, 0.5);
-    display: inline-block;
-    margin: -18px -14px;
-    vertical-align: middle;
-  }
 }
 .emoji-panel-wrap.one {
   top: 160px;
+}
+.subItem-span /deep/ .emoji-item-common,
+.content /deep/ .emoji-item-common {
+  background: url("~@/assets/img/emoji_sprite.png") no-repeat;
+  transform: scale(0.5, 0.5);
+  display: inline-block;
+  margin: -18px -14px;
+  vertical-align: middle;
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

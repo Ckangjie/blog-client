@@ -5,7 +5,7 @@ import { MessageBox, Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
-	baseURL: process.env.NODE_ENV === 'production' ? '' : process.env.VUE_APP_BASE_API,
+	baseURL: process.env.NODE_ENV === 'production' ? 'http://192.168.0.118:8080/api' : process.env.VUE_APP_BASE_API,
 	timeout: 5000 // request timeout
 })
 
