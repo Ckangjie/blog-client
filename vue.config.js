@@ -1,3 +1,4 @@
+console.log(process.env.VUE_APP_URL)
 const path = require('path')
 	, debug = process.env.NODE_ENV !== 'production';
 //const VueConf = require('./src/assets/js/libs/vue_config_class')
@@ -43,12 +44,12 @@ module.exports = {
 		https: false,
 		hotOnly: false,
 		proxy: {
-			'/api': {
+			[process.env.VUE_APP_URL]: {
 				target: process.env.VUE_APP_URL,
 				ws: true,
 				changOrigin: true,
 				pathRewrite: {
-					'^/api': ''
+					['^' + process.env.VUE_APP_URL]: ''
 				}
 			}
 		},

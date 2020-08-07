@@ -66,6 +66,7 @@ export default {
   margin-bottom: 10px;
 }
 .details /deep/ .emoji-panel-wrap.one {
-  top: 208px;
+  top: 132px;
+  z-index: 50;
 }
 </style>

@@ -186,6 +186,7 @@ span.emoji-item-common.emoji-angry {
 }
 .emoji-panel-wrap.one {
   top: 160px;
+  z-index: 50;
 }
 .subItem-span /deep/ .emoji-item-common,
 .content /deep/ .emoji-item-common {

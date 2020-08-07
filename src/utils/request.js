@@ -5,10 +5,8 @@ import { MessageBox, Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
-	baseURL: process.env.NODE_ENV === 'production' ? 'http://192.168.0.118:8080/api' : process.env.VUE_APP_BASE_API,
 	timeout: 5000 // request timeout
 })
-
 // 请求拦截
 axios.interceptors.request.use(function (config) {
 	if (store.state.user.token) {
@@ -77,19 +75,22 @@ axios.interceptors.response.use(
 )
 
 export const get = (url, data) => {
-	var path = sessionStorage.getItem('path')
+	var path = sessionStorage.getItem('path'),
+		http = process.env.NODE_ENV === 'development' ? '/api' + url : url;
 	if (data) {
 		data.path = path
 	}
-	return axios.get(url, {
+	return axios.get(http, {
 		params: data
 	})
 }
 
 export const post = (url, data) => {
-	var path = sessionStorage.getItem('path')
+	var path = sessionStorage.getItem('path'),
+		http = process.env.NODE_ENV === 'development' ? '/api' + url : url;
+
 	if (data) {
 		data.path = path
 	}
-	return axios.post(url, data)
+	return axios.post(http, data)
 }
