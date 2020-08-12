@@ -21,7 +21,7 @@
           </el-timeline-item>
         </el-timeline>
       </div>
-      <el-col :span="12">
+      <el-col :span="12" v-if="showData.length>0">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -40,6 +40,7 @@
 import { loading } from "element-ui";
 import { getList, getArticle, readCount } from "../../api/article.js";
 import { rTime } from "../../utils/common";
+import { getName } from "../../utils/auth.js";
 export default {
   data() {
     return {
@@ -55,9 +56,12 @@ export default {
     // 文章列表
     getList() {
       let data = {
+        author: getName() !== undefined ? getName() : " ",
         pageSize: this.pageSize,
         currentPage: (this.currentPage - 1) * this.pageSize,
       };
+      data.archive = "archive";
+      data.client = "client";
       this.loading = true;
       this.$store.dispatch("article/getArticle", data).then((res) => {
         this.loading = false;

@@ -1,16 +1,23 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'Admin-Token'
-
-export function getToken() {
-  return Cookies.get(TokenKey)
-}
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+  return Cookies.set('token', token)
+}
+export function getToken() {
+  return Cookies.get('token')
 }
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  return Cookies.remove('token')
+}
+export function getUserId() {
+  return Cookies.get('user')
+}
+export function setUserId(user) {
+  return Cookies.set('user', user)
+}
+export function removeUserId() {
+  return Cookies.remove('user')
 }
 export function setName(name) {
   return Cookies.set('name', name)
@@ -32,4 +39,13 @@ export function removeAvatar() {
   return Cookies.remove('avatar')
 }
 
+export function setUsername(username) {
+  return Cookies.set('username', username)
+}
+export function getUsername() {
+  return Cookies.get('username')
+}
+export function removeUsername() {
+  return Cookies.remove('username')
+}
 

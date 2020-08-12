@@ -87,7 +87,7 @@ export default {
     },
     avatar: function () {
       var avatar = "";
-      if (this.$store.state.user.avatar) {
+      if (this.$store.state.user.avatar !== "null") {
         avatar = this.$store.state.user.avatar;
       } else {
         avatar =

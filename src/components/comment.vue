@@ -14,11 +14,11 @@
         <el-col class="vcards">
           <el-col class="vcard" v-for="(item,index) in showData" :key="index">
             <el-col :span="2">
-              <el-avatar :size="30" :src="item.avatar?item.avatar:circleUrl"></el-avatar>
+              <el-avatar :size="30" :src="item.avatar"></el-avatar>
             </el-col>
             <el-col :span="22">
               <el-col class="name-time">
-                <span class="name">{{item.name}}</span>
+                <span class="name">{{item.username}}</span>
                 <span class="time">{{item.time}}</span>
               </el-col>
               <el-col :span="22" v-html="item.content" class="content"></el-col>
@@ -26,7 +26,7 @@
                 <el-tooltip
                   class="item"
                   effect="dark"
-                  :content="'回复->'+item.name"
+                  :content="'回复->'+item.username"
                   placement="right"
                 >
                   <span
@@ -34,7 +34,7 @@
                     class="fr vat"
                     :data-pid="item.id"
                     :data-index="index"
-                    :data-name="item.name"
+                    :data-name="item.username"
                     v-if="name===item.name?false:true"
                   >回复</span>
                 </el-tooltip>
@@ -51,11 +51,11 @@
               />
               <el-col class="vcard subItem" v-for="(subItem,sindex) in item.children" :key="sindex">
                 <el-col :span="2">
-                  <el-avatar :size="30" :src="subItem.avatar?subItem.avatar:circleUrl"></el-avatar>
+                  <el-avatar :size="30" :src="subItem.avatar"></el-avatar>
                 </el-col>
                 <el-col :span="22">
                   <el-col class="name-time">
-                    <span class="name" ref="name">{{subItem.name}}</span>
+                    <span class="name" ref="name">{{subItem.username}}</span>
                     <span class="time">{{subItem.time}}</span>
                   </el-col>
                   <el-col :span="22">
@@ -66,14 +66,14 @@
                     <el-tooltip
                       class="item"
                       effect="dark"
-                      :content="'回复->'+subItem.name"
+                      :content="'回复->'+subItem.username"
                       placement="right"
                     >
                       <span
                         @click="vat"
                         class="fr vat"
                         :data-index="sindex"
-                        :data-name="subItem.name"
+                        :data-name="subItem.username"
                         :data-subid="subItem.id"
                         :data-pid="item.id"
                         v-if="name===subItem.name?false:true"
@@ -159,11 +159,6 @@ export default {
       commentData.forEach((item) => {
         item.time = computedTime(rTime(item.time));
       });
-      commentData.forEach((item) => {
-        if (item.name === getName()) {
-          item.avatar = getAvatar();
-        }
-      });
       return this.$treeData(commentData, "id", "pid", "children");
     },
   },
@@ -176,11 +171,8 @@ export default {
       if (this.showForm) {
         const el = document.getElementById("textpanel");
         this.comment.content += html;
-        console.log(4);
       } else {
         const el = document.getElementById("textpanel2");
-        console.log(this.vatcomment);
-        console.log(5);
         this.vatcomment.content += html;
       }
     },
@@ -210,50 +202,50 @@ export default {
         this.vatShow = !this.vatShow;
       }, 500);
     },
-    onSubmit(formName) {
-      var _this = this;
-      if (!getName()) {
-        let data = formName === "comment" ? this.comment : this.vatcomment,
-          router_path = this.$route.path;
-        if (router_path.includes("details")) {
-          data.article_id = sessionStorage.getItem("id");
-        }
-        if (!data.name) {
-          let name = getName()
-            ? getName()
-            : "网友" + (Math.floor(Math.random() * 8999) + 1000);
-          data.name = name;
-        }
-        if (!data.content) {
-          this.$message({
-            type: "info",
-            message: "请输入评论内容",
-            center: true,
-          });
-        } else {
-          this.$store.dispatch("article/addComment", data).then((res) => {
-            this.close();
-            this.isShowEmojiPanel = false;
-            this.showForm = true;
-            this.getComment();
-            if (formName === "comment") {
-              this.resetForm(formName);
-            } else {
-              this.vatcomment = {};
-              return;
-            }
-          });
-        }
-      } else {
-        alert("请登录");
-        if (formName === "comment") {
-          this.resetForm(formName);
-        } else {
-          this.vatcomment = {};
-          return;
-        }
-      }
-    },
+    // onSubmit(formName) {
+    //   var _this = this;
+    //   if (!getName()) {
+    //     let data = formName === "comment" ? this.comment : this.vatcomment,
+    //       router_path = this.$route.path;
+    //     if (router_path.includes("details")) {
+    //       data.article_id = sessionStorage.getItem("id");
+    //     }
+    //     if (!data.name) {
+    //       let name = getName()
+    //         ? getName()
+    //         : "网友" + (Math.floor(Math.random() * 8999) + 1000);
+    //       data.name = name;
+    //     }
+    //     if (!data.content) {
+    //       this.$message({
+    //         type: "info",
+    //         message: "请输入评论内容",
+    //         center: true,
+    //       });
+    //     } else {
+    //       this.$store.dispatch("article/addComment", data).then((res) => {
+    //         this.close();
+    //         this.isShowEmojiPanel = false;
+    //         this.showForm = true;
+    //         this.getComment();
+    //         if (formName === "comment") {
+    //           this.resetForm(formName);
+    //         } else {
+    //           this.vatcomment = {};
+    //           return;
+    //         }
+    //       });
+    //     }
+    //   } else {
+    //     alert("请登录");
+    //     if (formName === "comment") {
+    //       this.resetForm(formName);
+    //     } else {
+    //       this.vatcomment = {};
+    //       return;
+    //     }
+    //   }
+    // },
     getComment() {
       this.$store.dispatch("article/commentList", {
         client: "client",

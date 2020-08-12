@@ -12,8 +12,8 @@ export function getCode(data) {
   return post('/getCode', data)
 }
 // 用户信息
-export function getInfo(token) {
-  return post('/userInfo', token)
+export function getInfo() {
+  return post('/userInfo')
 }
 // 退出登录
 export function logout(data) {

@@ -2,7 +2,7 @@
   <div class="uploader">
     <el-upload
       class="avatar-uploader"
-      action="/api/uploadAvatar"
+      :action="api"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
@@ -19,6 +19,10 @@ export default {
   data() {
     return {
       imageUrl: "",
+      api:
+        process.env.NODE_ENV === "production"
+          ? "http://120.79.186.106:3306/uploadAvatar"
+          : "/api/uploadAvatar",
     };
   },
   methods: {
@@ -38,7 +42,10 @@ export default {
       return isLt2M;
     },
     showAvtar() {
-      this.imageUrl = getAvatar();
+      this.imageUrl =
+        getAvatar() !== "null"
+          ? getAvatar()
+          : "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png";
     },
   },
   mounted() {

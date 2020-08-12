@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { getToken, removeToken } from './auth.js'
+import { setToken, getToken, getUserId, removeToken } from './auth.js'
 import store from '../store/index.js'
 import { MessageBox, Message } from 'element-ui'
-
+import qs from 'qs'
 // create an axios instance
 const service = axios.create({
 	timeout: 5000 // request timeout
@@ -11,8 +11,9 @@ const service = axios.create({
 axios.interceptors.request.use(function (config) {
 	if (store.state.user.token) {
 		// 将token存入config.headers
-		config.headers['token'] = JSON.parse(getToken()).token
-		config.headers['user_id'] = JSON.parse(getToken()).id
+		config.headers['token'] = getToken()
+		config.headers['userid'] = getUserId()
+		config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 	}
 	return config
 }, function (error) {
@@ -60,7 +61,6 @@ axios.interceptors.response.use(
 		}
 	},
 	error => {
-		console.log(res)
 		console.log('err' + error) // for debug
 		if (res.message) {
 			Message({
@@ -80,6 +80,7 @@ export const get = (url, data) => {
 	if (data) {
 		data.path = path
 	}
+
 	return axios.get(http, {
 		params: data
 	})
@@ -88,9 +89,9 @@ export const get = (url, data) => {
 export const post = (url, data) => {
 	var path = sessionStorage.getItem('path'),
 		http = process.env.NODE_ENV === 'development' ? '/api' + url : url;
-
 	if (data) {
 		data.path = path
 	}
-	return axios.post(http, data)
+
+	return axios.post(http, qs.stringify(data))
 }

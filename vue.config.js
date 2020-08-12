@@ -45,7 +45,7 @@ module.exports = {
 		hotOnly: false,
 		proxy: {
 			[process.env.VUE_APP_URL]: {
-				target: process.env.VUE_APP_URL,
+				target: process.env.VUE_APP_API,
 				ws: true,
 				changOrigin: true,
 				pathRewrite: {

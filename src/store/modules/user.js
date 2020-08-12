@@ -1,19 +1,20 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken, setName, setAvatar, getAvatar, getName, removeName, removeAvatar } from '@/utils/auth'
+import { getToken, setToken, removeToken, setName, setUserId, setAvatar, getAvatar, getUserId, getName, removeName, removeAvatar, setUsername, getUsername, removeUsername } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-
 const state = {
-  token: getToken() ? getToken() : '',
+  token: getToken(),
   name: getName() ? getName() : '',
   avatar: getAvatar() ? getAvatar() : '',
   introduction: '',
   roles: [],
-  username: ''
+  username: getUsername() ? getUsername() : '疾风之刃',
+  id: getUserId() ? getUserId() : 0
 }
 
 const mutations = {
-  SET_TOKEN: (state, token) => {
-    state.token = token
+  SET_TOKEN: (state, data) => {
+    state.token = data.token
+    state.id = data.id
   },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
@@ -40,8 +41,9 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         if (data) {
-          commit('SET_TOKEN', data.token)
-          setToken(data)
+          commit('SET_TOKEN', { "token": data.token, 'id': data.id })
+          setToken(data.token)
+          setUserId(data.id)
           resolve(response)
         }
         return false
@@ -54,29 +56,17 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo().then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { username, avatar } = data
-
-        // roles must be a non-empty array
-        // if (!roles || roles.length <= 0) {
-        //   reject('getInfo: roles must be a non-null array!')
-        // }
-
-        // commit('SET_ROLES', roles)
-        commit('SET_NAME', username)
-        commit('SET_AVATAR', avatar)
-        setName(username)
-        setAvatar(avatar)
-        // commit('SET_INTRODUCTION', introduction)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
+      getInfo().then(res => {
+        const { data } = res
+        removeAvatar()
+        setName(data.name)
+        setAvatar(data.avatar)
+        setUsername(data.username)
+        commit('SET_AVATAR', data.avatar)
+        commit('SET_USERNAME', data.username)
+        resolve(res)
+      }).catch(err => {
+        reject(res)
       })
     })
   },
@@ -87,10 +77,9 @@ const actions = {
       logout({ token: state.token }).then((res) => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
-        removeToken()
-        removeAvatar()
-        removeName()
-        rem
+        removeToken('token')
+        removeAvatar('avatar')
+        removeName('name')
         // resetRouter()
         resolve(res)
       }).catch(error => {
@@ -135,7 +124,7 @@ const actions = {
   },
   // 修改信息
   saveInfo({ commit }, data) {
-    console.log(data)
+    console.log(5)
     return new Promise((resolve, reject) => {
       saveInfo(data).then(res => {
         resolve(res)

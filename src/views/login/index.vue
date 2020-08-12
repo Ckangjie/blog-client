@@ -156,10 +156,16 @@ export default {
             if (data.code === this.identifyCode) {
               this.$store.dispatch("user/login", data).then((res) => {
                 if (res.status === 200) {
-                  setTimeout(() => {
-                    this.$store.dispatch("user/getInfo");
-                    this.$router.push("/dashboard");
-                  }, 1000);
+                  this.$store
+                    .dispatch("user/getInfo")
+                    .then((response) => {
+                      if (response.status === 200) {
+                        this.$router.push("/dashboard");
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 }
               });
               // login(data);

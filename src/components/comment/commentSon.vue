@@ -97,7 +97,7 @@ export default {
     },
     onSubmit(formName) {
       var _this = this;
-      if (!getName()) {
+      if (getName() !== undefined) {
         let data = this.comment,
           router_path = this.$route.path;
         if (router_path.includes("details")) {
@@ -123,11 +123,13 @@ export default {
             this.isShowEmojiPanel = false;
             this.$emit("getComment");
             this.$emit("close");
+            _this.resetForm(formName);
             this.showForm = true;
           });
         }
       } else {
         _this.resetForm(formName);
+        alert("你还没有登录");
       }
     },
     resetForm(formName) {

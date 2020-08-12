@@ -50,25 +50,27 @@ export default {
       name: "",
       ruleForm: {
         username: "",
-        avatar: ""
+        avatar: "",
       },
       rules: {
-        username: [{ message: "请输入用户名", trigger: "blur", required: true }]
-      }
+        username: [
+          { message: "请输入用户名", trigger: "blur", required: true },
+        ],
+      },
     };
   },
   components: {
-    Upload
+    Upload,
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           this.ruleForm.avatar =
             process.env.VUE_APP_URL + "/" + sessionStorage.getItem("avatar");
           this.ruleForm.oldAvatar = getAvatar();
-          saveInfo(this.ruleForm).then(res => {
-            this.$store.dispatch("user/getInfo").then(res => {});
+          saveInfo(this.ruleForm).then((res) => {
+            this.$store.dispatch("user/getInfo").then((res) => {});
           });
         } else {
           return false;
@@ -81,12 +83,14 @@ export default {
     // 显示信息
     showInfo() {
       let info = this.$store.state.user;
-      this.ruleForm.username = info.name;
-    }
+      console.log(info);
+      this.ruleForm.username =
+        info.username === "null" ? "giao人" : info.username;
+    },
   },
   mounted() {
     this.showInfo();
-  }
+  },
 };
 </script>
 

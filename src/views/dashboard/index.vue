@@ -184,6 +184,7 @@ export default {
         pageSize: this.pageSize,
         currentPage: (this.currentPage - 1) * this.pageSize,
       };
+      data.client = "client";
       this.loading = true;
       this.$store.dispatch("article/getArticle", data).then((res) => {
         this.loading = false;

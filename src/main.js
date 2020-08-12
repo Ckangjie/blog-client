@@ -9,15 +9,9 @@ import { treeData } from "./utils/treeData";
 import axios from 'axios'
 import Mock from './mock'
 import './permission'
-console.log(process.env)
-/*第一层if判断生产环境和开发环境*/
-if (process.env.NODE_ENV === 'production') {
-  //生产环境
-  axios.defaults.baseURL = process.env.VUE_APP_URL;//路径
-}
-else {
-  axios.defaults.baseURL = '';//路径
-}
+// console.log(process.env)
+//生产环境
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.VUE_APP_URL : '';
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false

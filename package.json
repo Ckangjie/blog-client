@@ -15,6 +15,7 @@
     "leancloud-storage": "^4.6.1",
     "mockjs": "^1.1.0",
     "os": "^0.1.1",
+    "qs": "^6.9.4",
     "valine": "^1.4.6",
     "vue": "^2.6.11",
     "vue-cli-plugin-style-resources-loader": "^0.1.4",
