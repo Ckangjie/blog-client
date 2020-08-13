@@ -1,6 +1,6 @@
 <template>
   <el-row class="nav">
-    <div class="search" v-if="showSearch">
+    <div class="search" v-if="total>0">
       <el-input
         v-model="searchKey"
         placeholder="输入关键字搜索"
@@ -54,7 +54,7 @@
 
 <script>
 import { search, readCount } from "../../api/article";
-import { removeToken, getAvatar } from "../../utils/auth";
+import { removeToken, getAvatar, getName } from "../../utils/auth";
 
 export default {
   data() {
@@ -69,6 +69,9 @@ export default {
     };
   },
   computed: {
+    total: function () {
+      return this.$store.state.article.total;
+    },
     showLogin: function () {
       if (!this.$store.state.user.token) return true;
     },
@@ -124,7 +127,11 @@ export default {
         this.$store.state.article.searchList = [];
         return false;
       } else {
-        this.$store.dispatch("article/search", value);
+        let data = {
+          value,
+          name: getName(),
+        };
+        this.$store.dispatch("article/search", data);
       }
     },
     dropdownBtn(index) {
@@ -153,13 +160,18 @@ export default {
         data = {};
       data.id = id;
       data.count = count;
-      readCount(data).then((res) => {
-        if (res.status === 200) {
-          this.$router.push({
-            path: "/details/" + id,
-          });
-        }
-      });
+      if (id === undefined) {
+        alert("无详情可跳转");
+        return false;
+      } else {
+        readCount(data).then((res) => {
+          if (res.status === 200) {
+            this.$router.push({
+              path: "/details/" + id,
+            });
+          }
+        });
+      }
     },
     keyup13() {
       var _this = this;

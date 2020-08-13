@@ -167,7 +167,7 @@ const actions = {
     // 搜索
     search({ commit }, data) {
         return new Promise((resolve, reject) => {
-            search({ value: data }).then(res => {
+            search(data).then(res => {
                 resolve(res.data)
                 commit('SET_ARTICLE', res.data)
             })
