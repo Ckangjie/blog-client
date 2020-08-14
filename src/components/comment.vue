@@ -59,7 +59,7 @@
                     <span class="time">{{subItem.time}}</span>
                   </el-col>
                   <el-col :span="22">
-                    <span class="span">@{{subItem.reply_name}}</span>
+                    <span class="span">@{{subItem.reply_name}}:</span>
                     <div v-html="subItem.content" class="subItem-span"></div>
                   </el-col>
                   <el-col :span="2">
@@ -202,51 +202,9 @@ export default {
         this.vatShow = !this.vatShow;
       }, 500);
     },
-    // onSubmit(formName) {
-    //   var _this = this;
-    //   if (!getName()) {
-    //     let data = formName === "comment" ? this.comment : this.vatcomment,
-    //       router_path = this.$route.path;
-    //     if (router_path.includes("details")) {
-    //       data.article_id = sessionStorage.getItem("id");
-    //     }
-    //     if (!data.name) {
-    //       let name = getName()
-    //         ? getName()
-    //         : "网友" + (Math.floor(Math.random() * 8999) + 1000);
-    //       data.name = name;
-    //     }
-    //     if (!data.content) {
-    //       this.$message({
-    //         type: "info",
-    //         message: "请输入评论内容",
-    //         center: true,
-    //       });
-    //     } else {
-    //       this.$store.dispatch("article/addComment", data).then((res) => {
-    //         this.close();
-    //         this.isShowEmojiPanel = false;
-    //         this.showForm = true;
-    //         this.getComment();
-    //         if (formName === "comment") {
-    //           this.resetForm(formName);
-    //         } else {
-    //           this.vatcomment = {};
-    //           return;
-    //         }
-    //       });
-    //     }
-    //   } else {
-    //     alert("请登录");
-    //     if (formName === "comment") {
-    //       this.resetForm(formName);
-    //     } else {
-    //       this.vatcomment = {};
-    //       return;
-    //     }
-    //   }
-    // },
     getComment() {
+      this.reply_name = "";
+      this.pid = 0;
       this.$store.dispatch("article/commentList", {
         client: "client",
         pageSize: this.pageSize,

@@ -1,6 +1,6 @@
 <template>
   <el-row class="nav">
-    <div class="search" v-if="total>0">
+    <div class="search" v-if="showSearch">
       <el-input
         v-model="searchKey"
         placeholder="输入关键字搜索"
@@ -129,7 +129,7 @@ export default {
       } else {
         let data = {
           value,
-          name: getName(),
+          name: getName() === undefined ? " " : getName(),
         };
         this.$store.dispatch("article/search", data);
       }

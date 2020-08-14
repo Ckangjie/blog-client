@@ -38,11 +38,7 @@
             <img src="../../assets/img/face_logo.png" />
           </div>
           <emoji @emojiClick="appendEmoji" v-if="isShowEmojiPanel" class="one" />
-          <el-button
-            type="primary"
-            @click="onSubmit('comment')"
-            class="submit"
-          >提交{{pid}}{{reply_name}}</el-button>
+          <el-button type="primary" @click="onSubmit('comment')" class="submit">提交</el-button>
         </el-col>
       </el-form>
     </el-col>
@@ -113,11 +109,7 @@ export default {
           data.pid = 0;
         }
         if (!data.content) {
-          this.$message({
-            type: "info",
-            message: "请输入评论内容",
-            center: true,
-          });
+          this.$mainMessage("请输入评论内容");
         } else {
           this.$store.dispatch("article/addComment", data).then((res) => {
             this.isShowEmojiPanel = false;
@@ -125,11 +117,13 @@ export default {
             this.$emit("close");
             _this.resetForm(formName);
             this.showForm = true;
+            this.reply_name = "";
+            this.pid = 0;
           });
         }
       } else {
         _this.resetForm(formName);
-        alert("你还没有登录");
+        this.$mainMessage("请登录");
       }
     },
     resetForm(formName) {

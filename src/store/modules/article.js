@@ -37,7 +37,7 @@ const mutations = {
         if (data.length > 0) {
             state.searchList = data
         } else {
-            state.searchList = [{ title: '暂无数据' }]
+            state.searchList = [{ title: ' ' }]
         }
     },
     // 文章列表

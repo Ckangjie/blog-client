@@ -9,6 +9,8 @@ import { treeData } from "./utils/treeData";
 import axios from 'axios'
 import Mock from './mock'
 import './permission'
+import { mainMessage } from '../src/utils/elementui'
+
 // console.log(process.env)
 //生产环境
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.VUE_APP_URL : '';
@@ -16,6 +18,7 @@ axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.VUE
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$treeData = treeData;
+Vue.prototype.$mainMessage = mainMessage;
 
 new Vue({
   router,

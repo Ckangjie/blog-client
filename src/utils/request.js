@@ -52,8 +52,8 @@ axios.interceptors.response.use(
 			if (res.message) {
 				Message({
 					message: res.message,
-					type: 'success',
-					duration: 3 * 1000,
+					type: res.type,
+					duration: 2 * 1000,
 					center: true
 				})
 			}
@@ -66,7 +66,7 @@ axios.interceptors.response.use(
 			Message({
 				message: error.message,
 				type: 'error',
-				duration: 3 * 1000,
+				duration: 2 * 1000,
 				center: true
 			})
 		}
