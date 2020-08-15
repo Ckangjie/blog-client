@@ -14,11 +14,11 @@
         <el-col class="vcards">
           <el-col class="vcard" v-for="(item,index) in showData" :key="index">
             <el-col :span="2">
-              <el-avatar :size="30" :src="item.avatar"></el-avatar>
+              <el-avatar :size="30" :src="item.avatar!==''?item.avatar:circleUrl"></el-avatar>
             </el-col>
             <el-col :span="22">
               <el-col class="name-time">
-                <span class="name">{{item.username}}</span>
+                <span class="name">{{item.username!==''?item.username:username}}</span>
                 <span class="time">{{item.time}}</span>
               </el-col>
               <el-col :span="22" v-html="item.content" class="content"></el-col>
@@ -51,7 +51,7 @@
               />
               <el-col class="vcard subItem" v-for="(subItem,sindex) in item.children" :key="sindex">
                 <el-col :span="2">
-                  <el-avatar :size="30" :src="subItem.avatar"></el-avatar>
+                  <el-avatar :size="30" :src="subItem.avatar!==''?subItem.avatar:circleUrl"></el-avatar>
                 </el-col>
                 <el-col :span="22">
                   <el-col class="name-time">
@@ -108,7 +108,7 @@
 <script>
 import commentForm from "./comment/commentSon";
 import { MessageBox, Notification } from "element-ui";
-import { getName, getAvatar } from "../utils/auth";
+import { getName, getAvatar, getUsername } from "../utils/auth";
 import { computedTime, rTime } from "../utils/common";
 export default {
   data() {
@@ -117,13 +117,13 @@ export default {
       params: "",
       isShowEmojiPanel: false,
       name: getName(),
+      username: getUsername(),
       subid: null,
       showForm: true,
       pid: null,
       id: null,
       vatShow: false,
-      circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      circleUrl: getAvatar(),
       commentList: [],
       textarea: "",
       comment: {

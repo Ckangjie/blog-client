@@ -15,6 +15,7 @@
                   <span class="title" v-if="item.title" @click="details(item)">{{item.title}}</span>
                   <span class="title" v-else>暂无标题</span>
                   <div class="tiem-skill">
+                    <span>@:{{item.username}}</span>
                     <span class="iconfont icon-icon-test">:{{item.time}}</span>
                     <span class="iconfont icon-jinengbiaoqian" v-if="item.skill">:{{item.skill}}</span>
                     <span class="iconfont icon-jinengbiaoqian" v-else>javascript</span>

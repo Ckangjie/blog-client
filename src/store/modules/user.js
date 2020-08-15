@@ -4,10 +4,10 @@ import router, { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: getName() ? getName() : '',
-  avatar: getAvatar() ? getAvatar() : '',
+  avatar: getAvatar(),
   introduction: '',
   roles: [],
-  username: getUsername() ? getUsername() : '疾风之刃',
+  username: getUsername(),
   id: getUserId() ? getUserId() : 0
 }
 
@@ -59,9 +59,21 @@ const actions = {
       getInfo().then(res => {
         const { data } = res
         removeAvatar()
-        setName(data.name)
+        // 用户名
+        if (data.username.length === 0 || data.username === 'null') {
+          data.username = 'giao人'
+        } else {
+          setUsername(data.username)
+        }
+        // 头像
+        if (data.avatar.length === 0 || data.avatar === 'null') {
+          data.avatar = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png";
+        } else {
+          setAvatar(data.avatar)
+        }
         setAvatar(data.avatar)
         setUsername(data.username)
+        setName(data.name)
         commit('SET_AVATAR', data.avatar)
         commit('SET_USERNAME', data.username)
         resolve(res)

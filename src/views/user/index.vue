@@ -43,7 +43,7 @@
 import Upload from "../../components/uploadImg.vue";
 import { testEmail } from "../../utils/reg";
 import { saveInfo } from "../../api/user.js";
-import { getAvatar } from "../../utils/auth.js";
+import { getAvatar, getUsername } from "../../utils/auth.js";
 export default {
   data() {
     return {
@@ -66,12 +66,17 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.ruleForm.avatar =
-            process.env.VUE_APP_URL + "/" + sessionStorage.getItem("avatar");
-          this.ruleForm.oldAvatar = getAvatar();
-          saveInfo(this.ruleForm).then((res) => {
-            this.$store.dispatch("user/getInfo").then((res) => {});
-          });
+          if (!this.ruleForm.avatar) {
+            this.ruleForm.avatar =
+              process.env.VUE_APP_URL + "/" + sessionStorage.getItem("avatar");
+          } else if (!this.ruleForm.username) {
+            this.ruleForm.username = getUsername();
+          } else {
+            this.ruleForm.oldAvatar = getAvatar();
+            saveInfo(this.ruleForm).then((res) => {
+              this.$store.dispatch("user/getInfo").then((res) => {});
+            });
+          }
         } else {
           return false;
         }
@@ -82,13 +87,11 @@ export default {
     },
     // 显示信息
     showInfo() {
-      let info = this.$store.state.user;
-      console.log(info);
-      this.ruleForm.username =
-        info.username === "null" ? "giao人" : info.username;
+      this.ruleForm.username = this.$store.state.user.username;
     },
   },
   mounted() {
+    this.$store.dispatch("user/getInfo");
     this.showInfo();
   },
 };

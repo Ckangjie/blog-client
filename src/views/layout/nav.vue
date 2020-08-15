@@ -55,6 +55,7 @@
 <script>
 import { search, readCount } from "../../api/article";
 import { removeToken, getAvatar, getName } from "../../utils/auth";
+import { getToken } from "@/utils/auth";
 
 export default {
   data() {
@@ -89,14 +90,7 @@ export default {
       }
     },
     avatar: function () {
-      var avatar = "";
-      if (this.$store.state.user.avatar !== "null") {
-        avatar = this.$store.state.user.avatar;
-      } else {
-        avatar =
-          "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png";
-      }
-      return avatar;
+      return this.$store.state.user.avatar;
     },
   },
   methods: {
@@ -193,6 +187,9 @@ export default {
   mounted() {
     this.getMenu();
     this.keyup13();
+    if (getToken()) {
+      this.$store.dispatch("user/getInfo");
+    }
   },
 };
 </script>

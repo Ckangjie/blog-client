@@ -131,6 +131,7 @@ export default {
     },
     close() {
       this.$emit("close");
+      this.$emit("getComment");
     },
   },
 };

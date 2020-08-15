@@ -42,10 +42,7 @@ export default {
       return isLt2M;
     },
     showAvtar() {
-      this.imageUrl =
-        getAvatar() !== "null"
-          ? getAvatar()
-          : "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png";
+      this.imageUrl = this.$store.state.user.avatar;
     },
   },
   mounted() {
