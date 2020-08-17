@@ -6,7 +6,11 @@ let mainMessage = function DoneMessage(options) {
     if (messageInstance) {
         messageInstance.close();
     }
-    messageInstance = Message(options);
+    messageInstance = Message({
+        message: options,
+        duration: 1 * 1000,
+        center: true
+    });
 }
 let arr = ['success', 'warning', 'info', 'error'];
 arr.forEach(function (type) {

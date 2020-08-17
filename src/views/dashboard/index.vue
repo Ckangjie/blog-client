@@ -71,12 +71,8 @@
               <div slot="header" class="clearfix">
                 <span>友情链接</span>
               </div>
-              <div
-                v-for="o in ['吴海.com','刘财.com','潘哥.com']"
-                :key="o"
-                class="text hot-item clearfix"
-              >
-                <span class="hot hide-1 fl">@ {{o}}</span>
+              <div v-for="o in Links" :key="o" class="text hot-item clearfix">
+                <a class="hot hide-1 fl" :href="o.src">{{o.name}}</a>
               </div>
             </el-card>
             <el-card class="box-card">
@@ -109,6 +105,11 @@ import { rTime } from "../../utils/common";
 export default {
   data() {
     return {
+      Links: [
+        { src: "http://140.143.45.59:8080/index/", name: "刘财" },
+        { src: "http://140.143.45.59:8080/index/", name: "吴海" },
+        { src: "http://140.143.45.59:8080/index/", name: "潘哥" },
+      ],
       loading: false,
       currentPage: Number(sessionStorage.getItem("currentPage"))
         ? Number(sessionStorage.getItem("currentPage"))

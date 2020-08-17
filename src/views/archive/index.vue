@@ -55,17 +55,23 @@ export default {
   methods: {
     // 文章列表
     getList() {
+      this.$store.state.article.list = [];
       let data = {
-        author: getName() !== undefined ? getName() : " ",
         pageSize: this.pageSize,
         currentPage: (this.currentPage - 1) * this.pageSize,
       };
-      data.archive = "archive";
-      data.client = "client";
-      this.loading = true;
-      this.$store.dispatch("article/getArticle", data).then((res) => {
-        this.loading = false;
-      });
+      if (getName() && getName() !== undefined) {
+        data.author = getName();
+        data.archive = "archive";
+        data.client = "client";
+        this.loading = true;
+        this.$store.dispatch("article/getArticle", data).then((res) => {
+          this.loading = false;
+        });
+      } else {
+        this.$mainMessage("登录查看已发表文章");
+        return false;
+      }
     },
     // 每页显示val条数据
     handleSizeChange(val) {

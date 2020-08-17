@@ -78,7 +78,7 @@ const actions = {
         commit('SET_USERNAME', data.username)
         resolve(res)
       }).catch(err => {
-        reject(res)
+        reject(err)
       })
     })
   },
