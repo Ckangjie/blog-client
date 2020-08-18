@@ -12,7 +12,7 @@
                 <span class="iconfont icon-yanjing">{{item.readCount}}</span>
               </div>
             </div>
-            <div class="details-item" v-html="item.content"></div>
+            <div class="details-item" v-html="item.content" v-highlight></div>
             <div>
               <!-- <Comments :is="viewComments"></Comments> -->
               <comment ref="comment" />

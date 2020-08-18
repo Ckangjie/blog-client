@@ -13,7 +13,7 @@
           <!-- 标题 -->
           <el-input type="text" class="title" placeholder="请输入标题" name="title" v-model="title" />
           <!-- 富文本编辑框 -->
-          <div id="editor" class="editor"></div>
+          <div id="editor" class="editor" v-highlight></div>
           <!-- 标签技能 -->
           <el-select v-model="skill" placeholder="请选择" class="skill">
             <el-option
@@ -85,7 +85,7 @@ export default {
       // 显示网络图片上传选项
       this.editor.customConfig.showLinkImg = true;
       // 关闭样式过滤(貌似不生效)
-      this.editor.customConfig.pasteFilterStyle = false;
+      // this.editor.customConfig.pasteFilterStyle = false;
       // 多语言
       // this.editor.customConfig.lang = {'设置标题': 'title','正文': 'p', '链接文字': 'link text','链接': 'link','上传图片': 'upload image','上传': 'upload','创建': 'init'}
       // 开发语言配置
@@ -151,6 +151,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+@import url("http://open.sojson.com/highlight.js/9.0.0/default.min.css");
 .release .title.el-input {
   margin-bottom: 10px;
 }

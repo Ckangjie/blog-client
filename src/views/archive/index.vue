@@ -69,6 +69,7 @@ export default {
           this.loading = false;
         });
       } else {
+        this.$store.state.article.list = [];
         this.$mainMessage("登录查看已发表文章");
         return false;
       }

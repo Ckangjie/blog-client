@@ -71,8 +71,8 @@
               <div slot="header" class="clearfix">
                 <span>友情链接</span>
               </div>
-              <div v-for="o in Links" :key="o" class="text hot-item clearfix">
-                <a class="hot hide-1 fl" :href="o.src">{{o.name}}</a>
+              <div v-for="(otem,index) in Links" :key="index" class="text hot-item clearfix">
+                <a class="hot hide-1 fl" :href="otem.src">{{otem.name}}</a>
               </div>
             </el-card>
             <el-card class="box-card">
@@ -106,9 +106,9 @@ export default {
   data() {
     return {
       Links: [
-        { src: "http://140.143.45.59:8080/index/", name: "刘财" },
-        { src: "http://140.143.45.59:8080/index/", name: "吴海" },
-        { src: "http://140.143.45.59:8080/index/", name: "潘哥" },
+        { src: "http://123.56.164.198:8080/index", name: "刘财" },
+        { src: "http://123.56.164.198:8080/index", name: "吴海" },
+        { src: "http://123.56.164.198:8080/index", name: "潘哥" },
       ],
       loading: false,
       currentPage: Number(sessionStorage.getItem("currentPage"))

@@ -187,9 +187,9 @@ export default {
   mounted() {
     this.getMenu();
     this.keyup13();
-    if (getToken()) {
-      this.$store.dispatch("user/getInfo");
-    }
+    // if (getToken()) {
+    //   this.$store.dispatch("user/getInfo");
+    // }
   },
 };
 </script>
