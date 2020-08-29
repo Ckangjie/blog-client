@@ -40,7 +40,7 @@ export default {
   name: "editor",
   data() {
     return {
-      disabled: false,
+      disabled: getName() !== "1040822172@qq.com" ? true : false,
       editor: "",
       title: "",
       skill: "",
@@ -127,20 +127,20 @@ export default {
         data.content = content;
         data.skill = this.skill;
         data.author = getName() ? getName() : "疾风之刃";
-        saveArticle(data).then((res) => {
-          if (res.status === 200) {
-            this.disabled = false;
-            setTimeout(() => {
-              this.$router.push("/dashboard");
-            }, 500);
-          }
-        });
+        if (getName() !== "1040822172@qq.com") {
+          this.$mainMessage("只有管理员才可以发表文章哟!");
+        } else {
+          saveArticle(data).then((res) => {
+            if (res.status === 200) {
+              this.disabled = false;
+              setTimeout(() => {
+                this.$router.push("/dashboard");
+              }, 500);
+            }
+          });
+        }
       } else {
-        this.$message({
-          type: "warning",
-          message: "请填写相应的内容",
-          center: true,
-        });
+        this.$mainMessage("请输入评论内容");
       }
     },
   },
@@ -151,7 +151,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import url("http://open.sojson.com/highlight.js/9.0.0/default.min.css");
 .release .title.el-input {
   margin-bottom: 10px;
 }

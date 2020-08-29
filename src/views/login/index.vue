@@ -160,6 +160,10 @@ export default {
                     .dispatch("user/getInfo")
                     .then((response) => {
                       if (response.status === 200) {
+                        sessionStorage.setItem(
+                          "defaultAvatar",
+                          "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                        );
                         this.$router.push("/dashboard");
                       }
                     })

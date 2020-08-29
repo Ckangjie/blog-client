@@ -99,7 +99,7 @@ const routes = [{
 
 const router = new VueRouter({
 	mode: 'hash',
-	linkActiveClass: 'active',
+	// linkActiveClass: 'active',
 	base: process.env.VUE_APP_URL,
 	routes
 })

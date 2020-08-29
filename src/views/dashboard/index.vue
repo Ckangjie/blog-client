@@ -6,19 +6,27 @@
           <el-col :span="16" :xs="16" :md="16" :sm="16" v-loading="loading">
             <div v-for="item in showData" :key="item.id">
               <el-card class="box-card article-item">
-                <el-image
-                  src="http://127.0.0.1:3001/top.png"
-                  class="hotArticle"
-                  v-if="item.readCount>500"
-                ></el-image>
+                <el-image :src="topImg" class="hotArticle" v-if="item.readCount>500"></el-image>
                 <div slot="header" class="clearfix">
-                  <span class="title" v-if="item.title" @click="details(item)">{{item.title}}</span>
+                  <span
+                    class="title"
+                    v-if="item.title"
+                    @click="details(item)"
+                    :title="item.title"
+                  >{{item.title}}</span>
                   <span class="title" v-else>暂无标题</span>
                   <div class="tiem-skill">
-                    <span>@:{{item.username}}</span>
-                    <span class="iconfont icon-icon-test">:{{item.time}}</span>
-                    <span class="iconfont icon-jinengbiaoqian" v-if="item.skill">:{{item.skill}}</span>
-                    <span class="iconfont icon-jinengbiaoqian" v-else>javascript</span>
+                    <span>
+                      <svg-icon iconClass="zuozhe" />
+                      {{item.username!==null?item.username:'匿名'}}
+                    </span>
+                    <span>
+                      <svg-icon iconClass="shijian" />
+                      :{{item.time}}
+                    </span>
+                    <svg-icon iconClass="biaoqian" class="goods" />
+                    <span class v-if="item.skill">:{{item.skill}}</span>
+                    <span class v-else>javascript</span>
                   </div>
                 </div>
                 <div v-for="o in 1" :key="o" class="text item">
@@ -33,7 +41,11 @@
                       </div>
                       <div class="conf-btm">
                         <span class="read" @click="details(item)">阅读文章</span>
-                        <span class="iconfont icon-yanjing">{{item.readCount}}</span>
+                        <span>
+                          <svg-icon iconClass="eye" class="eye" />
+                          {{item.readCount}}
+                        </span>
+                        <!-- <span class="iconfont icon-yanjing"></span> -->
                       </div>
                     </el-col>
                   </el-row>
@@ -106,16 +118,19 @@ export default {
   data() {
     return {
       Links: [
-        { src: "http://123.56.164.198:8080/index", name: "刘财" },
-        { src: "http://123.56.164.198:8080/index", name: "吴海" },
-        { src: "http://123.56.164.198:8080/index", name: "潘哥" },
+        { src: "http://www.lcfan.top/banxia/index/", name: "刘财" },
+        { src: "http://www.lcfan.top/banxia/index/", name: "吴海" },
+        { src: "http://www.lcfan.top/banxia/index/", name: "潘哥" },
       ],
       loading: false,
       currentPage: Number(sessionStorage.getItem("currentPage"))
         ? Number(sessionStorage.getItem("currentPage"))
         : 1,
       pageSize: 3,
-      src: "http://127.0.0.1:3001/vue.jpg",
+      topImg:
+        process.env.NODE_ENV === "production"
+          ? "http://120.79.186.106:3306/top.png"
+          : "http://127.0.0.1:3001/top.png",
       dynamicTags: [
         "java",
         "javascript",
@@ -127,6 +142,21 @@ export default {
     };
   },
   computed: {
+    // 文章总数
+    total: function () {
+      return this.$store.state.article.total;
+    },
+    // 热门文章
+    hotList: function () {
+      let list = this.$store.state.article.hotList,
+        data = [];
+      list.filter((item) => {
+        if (item.readCount >= 500) {
+          data.push(item);
+        }
+      });
+      return data;
+    },
     // 文章列表
     showData() {
       var _this = this;
@@ -137,21 +167,6 @@ export default {
       // 按阅读量排序
       list.sort(_this.handle("readCount"));
       return list;
-    },
-    // 文章总数
-    total: function () {
-      return this.$store.state.article.total;
-    },
-    // 热门文章
-    hotList: function () {
-      let list = this.$store.state.article.list,
-        data = [];
-      list.filter((item) => {
-        if (item.readCount >= 500) {
-          data.push(item);
-        }
-      });
-      return data;
     },
   },
   methods: {
@@ -212,4 +227,10 @@ export default {
 
 <style scoped="scoped" lang="less">
 @import "../../style/dashboard.less";
+.eye.svg-icon {
+  font-size: 30px;
+  position: relative;
+  top: 4px;
+  right: -12px;
+}
 </style>

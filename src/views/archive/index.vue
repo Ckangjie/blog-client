@@ -1,6 +1,9 @@
 <template>
   <el-row type="flex" class="row-bg archive" justify="center">
-    <el-col :span="12">
+    <el-col :span="12" v-if="show" style="color:#cccc">
+      <svg-icon iconClass="zwsj" class="goods" />暂无数据
+    </el-col>
+    <el-col :span="12" v-else>
       <div class="block" v-loading="loading">
         <el-timeline>
           <el-timeline-item
@@ -11,12 +14,19 @@
           >
             <el-card>
               <h4 class="title" @click="details(item)">{{item.title}}</h4>
-              <p style="color:#aaa">
-                <span>{{item.name}} 提交于 {{item.time}}</span>
-                <span class="iconfont icon-jinengbiaoqian" v-if="item.skill">:{{item.skill}}</span>
-                <span class="iconfont icon-jinengbiaoqian" v-else>javascript</span>
-                <span class="iconfont icon-yanjing">{{item.readCount}}</span>
-              </p>
+              <div class="tiem-skill">
+                <span>
+                  <svg-icon iconClass="zuozhe" />
+                  {{item.author||(item.username===null?'匿名':item.username)}}
+                </span>
+                <span>
+                  <svg-icon iconClass="shijian" />
+                  :{{item.time}}
+                </span>
+                <svg-icon iconClass="biaoqian" class="goods" />
+                <span class v-if="item.skill">:{{item.skill}}</span>
+                <span class v-else>javascript</span>
+              </div>
             </el-card>
           </el-timeline-item>
         </el-timeline>
@@ -44,6 +54,7 @@ import { getName } from "../../utils/auth.js";
 export default {
   data() {
     return {
+      show: false,
       articleList: [],
       currentPage: Number(sessionStorage.getItem("currentPageA"))
         ? Number(sessionStorage.getItem("currentPageA"))
@@ -55,24 +66,25 @@ export default {
   methods: {
     // 文章列表
     getList() {
-      this.$store.state.article.list = [];
       let data = {
         pageSize: this.pageSize,
         currentPage: (this.currentPage - 1) * this.pageSize,
       };
-      if (getName() && getName() !== undefined) {
+      if (getName() != undefined) {
         data.author = getName();
-        data.archive = "archive";
-        data.client = "client";
-        this.loading = true;
-        this.$store.dispatch("article/getArticle", data).then((res) => {
-          this.loading = false;
-        });
-      } else {
-        this.$store.state.article.list = [];
-        this.$mainMessage("登录查看已发表文章");
-        return false;
       }
+      data.archive = "archive";
+      data.client = "client";
+      this.loading = true;
+      this.$store.dispatch("article/getArticle", data).then((res) => {
+        this.articleList = res.data;
+        if (this.articleList.length > 0) {
+          this.show = false;
+        } else {
+          this.show = true;
+        }
+        this.loading = false;
+      });
     },
     // 每页显示val条数据
     handleSizeChange(val) {
@@ -111,8 +123,7 @@ export default {
     },
     // 文章列表
     showData() {
-      var _this = this;
-      let list = _this.$store.state.article.list;
+      let list = this.articleList;
       list.forEach((item) => {
         item.time = rTime(item.time);
       });

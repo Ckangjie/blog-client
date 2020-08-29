@@ -66,15 +66,26 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (!this.ruleForm.avatar) {
-            this.ruleForm.avatar =
-              process.env.VUE_APP_URL + "/" + sessionStorage.getItem("avatar");
-          } else if (!this.ruleForm.username) {
-            this.ruleForm.username = getUsername();
+          let avatar =
+            sessionStorage.getItem("avatar") === null
+              ? sessionStorage.getItem("defaultAvatar")
+              : process.env.VUE_APP_URL +
+                "/" +
+                sessionStorage.getItem("avatar");
+
+          this.ruleForm.avatar = avatar;
+          this.ruleForm.oldAvatar = getAvatar();
+          if (
+            this.ruleForm.avatar === this.ruleForm.oldAvatar &&
+            this.ruleForm.username === this.$store.state.user.username
+          ) {
+            this.$mainMessage("数据无变化");
           } else {
-            this.ruleForm.oldAvatar = getAvatar();
             saveInfo(this.ruleForm).then((res) => {
-              this.$store.dispatch("user/getInfo").then((res) => {});
+              this.$store.dispatch("user/getInfo").then((res) => {
+                // this.ruleForm.avatar = res.data.avatar;
+                // this.ruleForm.username = res.data.username;
+              });
             });
           }
         } else {

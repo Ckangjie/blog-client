@@ -7,9 +7,12 @@
             <div class="details-header">
               <span class="title">{{item.title}}</span>
               <div class="skill-item">
-                <span class="iconfont icon-icon-test">:{{item.time.slice(0,10)}}</span>
-                <span class="iconfont icon-jinengbiaoqian">:{{item.skill}}</span>
-                <span class="iconfont icon-yanjing">{{item.readCount}}</span>
+                <svg-icon iconClass="shijian" />
+                :{{item.time.slice(0,10)}}
+                <svg-icon iconClass="biaoqian" class="goods" />
+                :{{item.skill===null?'javascript':item.skill}}
+                <svg-icon iconClass="eye" class="eye" />
+                {{item.readCount}}
               </div>
             </div>
             <div class="details-item" v-html="item.content" v-highlight></div>
@@ -68,5 +71,11 @@ export default {
 .details /deep/ .emoji-panel-wrap.one {
   top: 132px;
   z-index: 50;
+}
+.eye.svg-icon {
+  font-size: 30px;
+  position: relative;
+  top: 4px;
+  right: -12px;
 }
 </style>

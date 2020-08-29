@@ -13,6 +13,7 @@ const state = {
     showSearch: true,
     list: [],
     total: 0,
+    hotList: [],
     commentList: []
 }
 
@@ -48,11 +49,14 @@ const mutations = {
     SET_TOTAL: (state, data) => {
         state.total = data
     },
-    SET_SHOWSEARCH: (state, data) => {
-        state.showSearch = data
+    SET_SHOWSEARCH: (state, value) => {
+        state.showSearch = value
     },
     SET_COMMENTLIST: (state, data) => {
         state.commentList = data
+    },
+    SET_HOTLIST: (state, data) => {
+        state.hotList = data
     }
 }
 
@@ -61,7 +65,8 @@ const actions = {
     getArticle({ commit }, data) {
         return new Promise((resolve, reject) => {
             getArticle(data).then(res => {
-                commit('SET_TOTAL', res.total)
+                commit('SET_TOTAL', res.total.length)
+                commit('SET_HOTLIST', res.total)
                 commit('SET_LIST', res.data)
                 resolve(res)
             })

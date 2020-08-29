@@ -16,6 +16,7 @@
     "mockjs": "^1.1.0",
     "os": "^0.1.1",
     "qs": "^6.9.4",
+    "svg-sprite-loader": "^5.0.0",
     "valine": "^1.4.6",
     "vue": "^2.6.11",
     "vue-cli-plugin-style-resources-loader": "^0.1.4",

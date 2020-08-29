@@ -2,17 +2,17 @@
   <el-row>
     <el-col>
       <el-form ref="comment" :model="comment" v-if="showForm">
-        <el-col :span="8">
+        <!-- <el-col :span="8">
           <el-form-item prop="name">
             <el-input type="text" v-model="comment.name" autocomplete="off" placeholder="请输入用户名"></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span="8">
+        </el-col>-->
+        <el-col :span="12">
           <el-form-item prop="email">
             <el-input type="text" autocomplete="off" v-model="comment.email" placeholder="请输入邮箱"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="12">
           <el-form-item prop="website">
             <el-input
               type="text"
@@ -66,7 +66,7 @@ export default {
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       commentList: [],
       textarea: "",
-      placeholder: this.reply_name != "" ? "@" + this.reply_name : "",
+      placeholder: this.reply_name != "" ? "@" + this.reply_name : "说点啥...",
       comment: {
         website: "",
         name: "",
@@ -124,6 +124,9 @@ export default {
       } else {
         _this.resetForm(formName);
         this.$mainMessage("请登录");
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 2000);
       }
     },
     resetForm(formName) {

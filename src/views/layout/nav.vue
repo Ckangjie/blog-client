@@ -9,7 +9,7 @@
         @keyup.up.native="keyupUp()"
         @keyup.down.native="down()"
       />
-      <div class="result" v-if="searchKey?true:false">
+      <div class="result" v-if="searchKey?true:false" v-loading="loading">
         <div
           class="result-item hide"
           v-for="(item,index) in searchData"
@@ -56,15 +56,17 @@
 import { search, readCount } from "../../api/article";
 import { removeToken, getAvatar, getName } from "../../utils/auth";
 import { getToken } from "@/utils/auth";
+import { loading } from "element-ui";
 
 export default {
   data() {
     return {
+      loading: false,
       showSearchItem: true,
       menuList: [],
       searchKey: "",
       idx: 0,
-      searchIdx: -1,
+      searchIdx: 0,
       dropdownList: ["个人中心", "发布文章", "退出登录"],
       hidden: false,
     };
@@ -74,7 +76,7 @@ export default {
       return this.$store.state.article.total;
     },
     showLogin: function () {
-      if (!this.$store.state.user.token) return true;
+      if (!this.$store.state.user.token) return false;
     },
     Login: function () {
       if (this.$store.state.user.token) return true;
@@ -83,11 +85,7 @@ export default {
       return this.$store.state.article.searchList;
     },
     showSearch: function () {
-      if (this.$store.state.article.showSearch) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.$store.state.article.showSearch;
     },
     avatar: function () {
       return this.$store.state.user.avatar;
@@ -100,6 +98,11 @@ export default {
       if (this.searchIdx < 0) {
         this.searchIdx = data.length - 1;
       }
+      data.forEach((item, index) => {
+        if (this.searchIdx === index) {
+          this.searchKey = data[index].title;
+        }
+      });
     },
     down() {
       let data = this.$store.state.article.searchList;
@@ -108,6 +111,11 @@ export default {
       } else {
         this.searchIdx = 0;
       }
+      data.forEach((item, index) => {
+        if (this.searchIdx === index) {
+          this.searchKey = data[index].title;
+        }
+      });
     },
     tabNav(index) {
       this.idx = index;
@@ -123,8 +131,8 @@ export default {
       } else {
         let data = {
           value,
-          name: getName() === undefined ? " " : getName(),
         };
+        data.name = getName() != undefined ? getName() : undefined;
         this.$store.dispatch("article/search", data);
       }
     },

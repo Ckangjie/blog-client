@@ -9,6 +9,7 @@ import { treeData } from "./utils/treeData";
 import axios from 'axios'
 import Mock from './mock'
 import './permission'
+import './icons'
 import { mainMessage } from '../src/utils/elementui'
 
 // console.log(process.env)
