@@ -41,7 +41,7 @@ const routes = [{
 	}]
 }, {
 	path: '/about',
-	title: '关于',
+	title: '留言',
 	redirect: '/aboutMy',
 	component: layout,
 	children: [{

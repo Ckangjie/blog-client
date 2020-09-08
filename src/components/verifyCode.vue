@@ -10,48 +10,48 @@ export default {
     identifyCode: {
       // 默认注册码
       type: String,
-      default: "1234"
+      default: "1234",
     },
     fontSizeMin: {
       // 字体最小值
       type: Number,
-      default: 25
+      default: 25,
     },
     fontSizeMax: {
       // 字体最大值
       type: Number,
-      default: 35
+      default: 35,
     },
     backgroundColorMin: {
       // 验证码图片背景色最小值
       type: Number,
-      default: 200
+      default: 200,
     },
     backgroundColorMax: {
       // 验证码图片背景色最大值
       type: Number,
-      default: 220
+      default: 220,
     },
     dotColorMin: {
       // 背景干扰点最小值
       type: Number,
-      default: 60
+      default: 60,
     },
     dotColorMax: {
       // 背景干扰点最大值
       type: Number,
-      default: 120
+      default: 120,
     },
     contentWidth: {
       // 容器宽度
       type: Number,
-      default: 116
+      default: 100,
     },
     contentHeight: {
       // 容器高度
       type: Number,
-      default: 38
-    }
+      default: 38,
+    },
   },
   methods: {
     // 生成一个随机数
@@ -127,16 +127,16 @@ export default {
         );
         ctx.fill();
       }
-    }
+    },
   },
   watch: {
     identifyCode() {
       this.drawPic();
-    }
+    },
   },
   mounted() {
     this.drawPic();
-  }
+  },
 };
 </script>
 

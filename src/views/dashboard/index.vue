@@ -1,9 +1,9 @@
 <template>
   <div class="article">
     <el-row type="flex" class="row-bg" justify="center">
-      <el-col :span="24" :xs="20" :md="20" :sm="20" :lg="20">
+      <el-col :span="16" :xs="16" :md="16" :sm="16" :lg="16">
         <el-row type="flex" class="row-bg" justify="space-around">
-          <el-col :span="16" :xs="16" :md="16" :sm="16" v-loading="loading">
+          <el-col :span="17" :xs="17" :md="17" :sm="17" v-loading="loading">
             <div v-for="item in showData" :key="item.id">
               <el-card class="box-card article-item">
                 <el-image :src="topImg" class="hotArticle" v-if="item.readCount>500"></el-image>
@@ -75,7 +75,10 @@
               </div>
               <div v-for="o in hotList" :key="o.id" class="text hot-item clearfix">
                 <span class="hot hide-1 fl" @click="details(o)">{{o.title}}</span>
-                <i class="iconfont icon-yanjing">{{o.readCount}}</i>
+                <i>
+                  <svg-icon iconClass="eye" class="hot-data" />
+                  {{o.readCount}}
+                </i>
               </div>
               <!-- <span class="more icon-xiangxiazhankai iconfont"></span> -->
             </el-card>
@@ -232,5 +235,11 @@ export default {
   position: relative;
   top: 4px;
   right: -12px;
+}
+.hot-data.svg-icon {
+  font-size: 25px;
+  position: relative;
+  top: 2px;
+  margin-right: -8px;
 }
 </style>

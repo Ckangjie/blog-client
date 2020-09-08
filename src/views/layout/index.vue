@@ -7,7 +7,7 @@
       <router-view />
     </el-col>
     <el-col class="footer-box">
-      <!-- <btm></btm> -->
+      <bottom />
     </el-col>
     <template>
       <el-backtop></el-backtop>
@@ -17,7 +17,7 @@
 
 <script>
 import navBar from "./nav";
-import btm from "./footer.vue";
+import bottom from "./footer.vue";
 export default {
   data() {
     return {
@@ -31,7 +31,7 @@ export default {
   },
   components: {
     navBar,
-    btm,
+    bottom,
   },
   mounted() {
     this.getMenu();
@@ -51,7 +51,7 @@ export default {
 }
 
 .content .main {
-  padding: 80px 0 80px 0;
+  margin-top: 4%;
 }
 
 .content .nav-box {

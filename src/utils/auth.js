@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 var millisecond = new Date().getTime(),
-  // 20分钟
+  // token有效时间20分钟
   expiresTime = new Date(millisecond + 60 * 1000 * 20);
 
 export function setToken(token) {

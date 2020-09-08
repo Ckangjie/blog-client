@@ -145,4 +145,7 @@ export default {
 .iconfont.icon-yanjing::before {
   margin-right: 5px;
 }
+.el-timeline-item:last-child {
+  margin-bottom: 15px;
+}
 </style>

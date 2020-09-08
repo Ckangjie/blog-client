@@ -47,7 +47,8 @@
                 </el-col>
                 <el-col :span="8" class="code login-code">
                   <div @click="changeCode()">
-                    <verifyCode :identifyCode="identifyCode" />
+                    {{code}}
+                    <!-- <verifyCode :identifyCode="identifyCode" /> -->
                   </div>
                 </el-col>
               </el-form-item>
@@ -83,11 +84,10 @@
 import { testEmail, testPwd, getLoginCode } from "../../utils/reg";
 import { login, register, getCode } from "../../api/user";
 import { Message } from "element-ui";
-import verifyCode from "../../components/verifyCode";
 export default {
   data() {
     return {
-      identifyCode: "",
+      code: "xxxx",
       // 验证码的随机取值范围
       identifyCodes: "123456789abcdefghjkmnpqrstuvwxyz",
       show: true,
@@ -115,6 +115,7 @@ export default {
         ],
         password: [
           {
+            required: true,
             min: 6,
             max: 18,
             message: "密码长度在 6 到 18 个字符",
@@ -143,9 +144,6 @@ export default {
       },
     };
   },
-  components: {
-    verifyCode,
-  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -153,7 +151,7 @@ export default {
           let data = this.ruleForm;
           data.client = "client";
           if (this.value === "登录") {
-            if (data.code === this.identifyCode) {
+            if (data.code.toLowerCase() === this.code.toLowerCase()) {
               this.$store.dispatch("user/login", data).then((res) => {
                 if (res.status === 200) {
                   this.$store
@@ -178,6 +176,9 @@ export default {
                 showClose: true,
                 message: "验证码错误",
                 type: "warning",
+                onClose: () => {
+                  this.changeCode();
+                },
               });
             }
           } else {
@@ -243,26 +244,80 @@ export default {
     },
     // 点击验证码刷新验证码
     changeCode() {
-      this.identifyCode = "";
-      this.makeCode(this.identifyCodes, 4);
-    },
-    // 生成一个随机整数  randomNum(0, 10) 0 到 10 的随机整数， 包含 0 和 10
-    randomNum(min, max) {
-      max = max + 1;
-      return Math.floor(Math.random() * (max - min) + min);
-    },
-    // 随机生成验证码字符串
-    makeCode(data, len) {
-      for (let i = 0; i < len; i++) {
-        this.identifyCode += data[this.randomNum(0, data.length - 1)];
+      var code = "";
+      var codeLength = 4; //验证码的长度
+      var random = [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+      ]; //随机数
+      for (var i = 0; i < codeLength; i++) {
+        //循环操作
+        var index = Math.floor(Math.random() * 62); //取得随机数的索引（0~35）
+        code += random[index]; //根据索引取得随机数加到code上
       }
+      this.code = code; //把code值赋给验证码
     },
   },
-  // computed:{
-  // 	valueName:function(e){
-  // 		return this.value
-  // 	}
-  // },
   watch: {
     value(newValue, oldValue) {
       this.value = newValue;
@@ -270,7 +325,7 @@ export default {
   },
   mounted() {
     // 刷新页面就生成随机验证码
-    this.makeCode(this.identifyCodes, 4);
+    this.changeCode();
   },
 };
 </script>

@@ -132,8 +132,11 @@ export default {
         let data = {
           value,
         };
+        this.loading = true;
         data.name = getName() != undefined ? getName() : undefined;
-        this.$store.dispatch("article/search", data);
+        this.$store.dispatch("article/search", data).then((res) => {
+          this.loading = false;
+        });
       }
     },
     dropdownBtn(index) {

@@ -14,7 +14,8 @@ const state = {
     list: [],
     total: 0,
     hotList: [],
-    commentList: []
+    commentList: [],
+    showFooter: true
 }
 
 const mutations = {
@@ -57,6 +58,9 @@ const mutations = {
     },
     SET_HOTLIST: (state, data) => {
         state.hotList = data
+    },
+    SET_FOOTER: (state, value) => {
+        state.showFooter = value
     }
 }
 

@@ -4,6 +4,8 @@ import { Message } from 'element-ui'
 import { getToken, removeUsername, removeName, removeUserId } from '@/utils/auth'
 router.beforeEach(async (to, from, next) => {
     sessionStorage.setItem('path', to.path)
+    let showFooter = (to.path === '/dashboard' ? true : false)
+    store.commit('article/SET_FOOTER', showFooter)
     if (to.path === '/login' && getToken() != undefined) {
         next('/dashboard')
     } else if (getToken() === undefined) {
