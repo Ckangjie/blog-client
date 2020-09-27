@@ -24,8 +24,10 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(
 	response => {
 		const res = response.data
+		console.log(res)
 		// if the custom status is not 200, it is judged as an error.
 		if (res.status !== 200) {
+			removeToken()
 			Message({
 				message: res.message || 'Error',
 				type: 'error',
@@ -47,7 +49,7 @@ axios.interceptors.response.use(
 					// })
 				})
 			}
-			return false
+			// return false
 		} else {
 			if (res.message) {
 				Message({

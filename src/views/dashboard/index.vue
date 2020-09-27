@@ -6,44 +6,51 @@
           <el-col :span="17" :xs="17" :md="17" :sm="17" v-loading="loading">
             <div v-for="item in showData" :key="item.id">
               <el-card class="box-card article-item">
-                <el-image :src="topImg" class="hotArticle" v-if="item.readCount>500"></el-image>
+                <el-image
+                  :src="topImg"
+                  class="hotArticle"
+                  v-if="item.readCount > 500"
+                ></el-image>
                 <div slot="header" class="clearfix">
                   <span
                     class="title"
                     v-if="item.title"
                     @click="details(item)"
                     :title="item.title"
-                  >{{item.title}}</span>
+                    >{{ item.title }}</span
+                  >
                   <span class="title" v-else>暂无标题</span>
                   <div class="tiem-skill">
                     <span>
                       <svg-icon iconClass="zuozhe" />
-                      {{item.username!==null?item.username:'匿名'}}
+                      {{ item.username !== null ? item.username : "匿名" }}
                     </span>
                     <span>
                       <svg-icon iconClass="shijian" />
-                      :{{item.time}}
+                      :{{ item.time }}
                     </span>
                     <svg-icon iconClass="biaoqian" class="goods" />
-                    <span class v-if="item.skill">:{{item.skill}}</span>
+                    <span class v-if="item.skill">:{{ item.skill }}</span>
                     <span class v-else>javascript</span>
                   </div>
                 </div>
                 <div v-for="o in 1" :key="o" class="text item">
                   <el-row>
-                    <el-col :span="8" style="display:none">
+                    <el-col :span="8" style="display: none">
                       <el-image :src="item.images" class="iamges"></el-image>
                     </el-col>
                     <el-col :span="16" class="a">
                       <div class="article-conf hide">
-                        <p v-if="item.content">{{item.content}}</p>
+                        <p v-if="item.content">{{ item.content }}</p>
                         <p v-else>暂无数据</p>
                       </div>
                       <div class="conf-btm">
-                        <span class="read" @click="details(item)">阅读文章</span>
+                        <span class="read" @click="details(item)"
+                          >阅读文章</span
+                        >
                         <span>
                           <svg-icon iconClass="eye" class="eye" />
-                          {{item.readCount}}
+                          {{ item.readCount }}
                         </span>
                         <!-- <span class="iconfont icon-yanjing"></span> -->
                       </div>
@@ -53,7 +60,13 @@
               </el-card>
             </div>
           </el-col>
-          <el-col :span="6" :xs="6" :md="6" :lg="6" class="hidden-sm-and-down hidden-md-only">
+          <el-col
+            :span="6"
+            :xs="6"
+            :md="6"
+            :lg="6"
+            class="hidden-sm-and-down hidden-md-only"
+          >
             <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>技能标签</span>
@@ -65,19 +78,28 @@
                   closable
                   :disable-transitions="false"
                   @close="handleClose(tag)"
-                >{{tag}}</el-tag>
-                <span v-if="dynamicTags.length==0" class="null">暂无数据</span>
+                  >{{ tag }}</el-tag
+                >
+                <span v-if="dynamicTags.length == 0" class="null"
+                  >暂无数据</span
+                >
               </div>
             </el-card>
             <el-card class="box-card hot">
               <div slot="header" class="clearfix">
                 <span>热门文章</span>
               </div>
-              <div v-for="o in hotList" :key="o.id" class="text hot-item clearfix">
-                <span class="hot hide-1 fl" @click="details(o)">{{o.title}}</span>
+              <div
+                v-for="o in hotList"
+                :key="o.id"
+                class="text hot-item clearfix"
+              >
+                <span class="hot hide-1 fl" @click="details(o)">{{
+                  o.title
+                }}</span>
                 <i>
                   <svg-icon iconClass="eye" class="hot-data" />
-                  {{o.readCount}}
+                  {{ o.readCount }}
                 </i>
               </div>
               <!-- <span class="more icon-xiangxiazhankai iconfont"></span> -->
@@ -86,15 +108,21 @@
               <div slot="header" class="clearfix">
                 <span>友情链接</span>
               </div>
-              <div v-for="(otem,index) in Links" :key="index" class="text hot-item clearfix">
-                <a class="hot hide-1 fl" :href="otem.src">{{otem.name}}</a>
+              <div
+                v-for="(otem, index) in Links"
+                :key="index"
+                class="text hot-item clearfix"
+              >
+                <a class="hot hide-1 fl" :href="otem.src">{{ otem.name }}</a>
               </div>
             </el-card>
             <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>友情链接</span>
               </div>
-              <div v-for="o in 1" :key="o" class="text item">{{'列表内容 ' + o }}</div>
+              <div v-for="o in 1" :key="o" class="text item">
+                {{ "列表内容 " + o }}
+              </div>
             </el-card>
           </el-col>
         </el-row>
@@ -103,7 +131,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
-            :page-sizes="[3,5,10,15,20]"
+            :page-sizes="[3, 5, 10, 15, 20]"
             :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"

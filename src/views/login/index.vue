@@ -2,9 +2,7 @@
   <el-row type="flex" class="row-bg login-register" justify="center">
     <el-col :span="12">
       <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>❤</span>关于我
-        </div>
+        <div slot="header" class="clearfix"><span>❤</span>关于我</div>
         <el-col :span="12">我是一条咸鱼</el-col>
         <el-col :span="12">
           <div class="login-from">
@@ -32,7 +30,11 @@
                   placeholder="请输入密码"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="确认密码" prop="repassword" v-if="showRegister">
+              <el-form-item
+                label="确认密码"
+                prop="repassword"
+                v-if="showRegister"
+              >
                 <el-input
                   type="password"
                   v-model="ruleForm.repassword"
@@ -43,22 +45,28 @@
               </el-form-item>
               <el-form-item label="验证码" prop="code" v-if="showLogin">
                 <el-col :span="15">
-                  <el-input v-model="ruleForm.code" placeholder="验证码"></el-input>
+                  <el-input
+                    v-model="ruleForm.code"
+                    placeholder="验证码"
+                  ></el-input>
                 </el-col>
                 <el-col :span="8" class="code login-code">
                   <div @click="changeCode()">
-                    {{code}}
+                    {{ code }}
                     <!-- <verifyCode :identifyCode="identifyCode" /> -->
                   </div>
                 </el-col>
               </el-form-item>
               <el-form-item label="验证码" prop="code" v-if="showRegister">
                 <el-col :span="15">
-                  <el-input v-model.number="ruleForm.code" placeholder="验证码"></el-input>
+                  <el-input
+                    v-model.number="ruleForm.code"
+                    placeholder="验证码"
+                  ></el-input>
                 </el-col>
                 <el-col :span="8" class="code">
                   <div @click="getCode" v-show="show" disabled>获取验证码</div>
-                  <span v-show="!show" disabled>获取中{{count}}s</span>
+                  <span v-show="!show" disabled>获取中{{ count }}s</span>
                 </el-col>
               </el-form-item>
               <div class="goRegister" v-if="showLogin">
@@ -70,7 +78,9 @@
                 <span @click="tabBtn('登录')">立即登录</span>
               </div>
               <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">{{value}}</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">{{
+                  value
+                }}</el-button>
               </el-form-item>
             </el-form>
           </div>

@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     runTime() {
-      console.log(this);
       var s1 = "2020-08-31",
         _this = this,
         s2,

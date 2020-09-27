@@ -7,17 +7,6 @@
   clear: both;
   visibility: hidden;
 }
-/* 按钮 */
-.btn{
-  display: inline-block;
-  border-radius: 8rpx;
-  padding: 5rpx;
-  width: 170rpx;
-  max-width: 200rpx;
-  text-align: center;
-  font-size: 24rpx;
-  color: white;
-}
 
 /* 浮动 */
 .fr{
